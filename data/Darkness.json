@@ -8,5 +8,11 @@
     "percentToQualify": "100",
     "password": "Free To Copy",
     "records": [
+        {
+            "user": "Mental",
+            "link": "https://youtu.be/-1wZPWChVlA?si=8rX3lrzFbwUzRg4v",
+            "percent": 100,
+            "hz": 360
+        }
     ]
 }
