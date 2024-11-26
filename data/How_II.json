@@ -1,0 +1,24 @@
+{
+    "id": 74302630,
+    "name": "How II",
+    "author": "EpicSparkZ",
+    "creators": ["EpicSparkZ"],
+    "verifier": "EpicSparkZ",
+    "verification": "https://m.youtube.com/watch?v=vR3i-BnLvis",
+    "percentToQualify": 100,
+    "password": "Free to copy",
+    "records": [
+        {
+            "user": "Tonk",
+            "link": "https://www.google.com/url?q=https://youtu.be/1KTE5FbaXm4&sa=D&source=editors&ust=1732592140919785&usg=AOvVaw0rEfCXiYSdleDydwsyDAMc",
+            "percent": 100,
+            "hz": 360
+        },
+        {
+            "user": "Mental",
+            "link": "https://m.youtube.com/watch?v=WCnDVM7vFSI",
+            "percent": 100,
+            "hz": 360
+        }
+    ]
+}
