@@ -77,7 +77,7 @@ export default {
                     </table>
                 </div>
                 <div v-else class="level" style="height: 100%; justify-content: center; align-items: center;">
-                    <p>Looks like something failed to load. Please contact a list developet if this continues for a while.</p>
+                    <p>Looks like something failed to load or is broken at the moment. This may be due to a faliure in code, or an invalid level file. Please contact a list developet if this continues for over 24 hours.</p>
                 </div>
             </div>
             <div class="meta-container">
