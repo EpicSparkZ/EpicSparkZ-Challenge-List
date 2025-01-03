@@ -3,20 +3,14 @@
     "name": "Click Micro",
     "author": "EpicSparkZ",
     "creators": ["EpicSparkZ"],
-    "verifier": "EpicSparkZ",
-    "verification": "https://www.youtube.com/watch?v=hdkdbjdjdbsidbjxiskwbfkjdksjfb",
+    "verifier": "Mental",
+    "verification": "https://www.google.com/url?q=https://youtu.be/t-oHS3gugX4&sa=D&source=editors&ust=1732590707041683&usg=AOvVaw2MsgmGEyp4CbgzRDm4y3US",
     "percentToQualify": 100,
     "password": "Free to copy",
     "records": [
         {
             "user": "Tonk",
             "link": "https://www.google.com/url?q=https://youtu.be/Mosm486sw8U&sa=D&source=editors&ust=1732590707039472&usg=AOvVaw1W_igbORh7oF6Lwg5tF1IU",
-            "percent": 100,
-            "hz": 360
-        },
-        {
-            "user": "Mental",
-            "link": "https://www.google.com/url?q=https://youtu.be/t-oHS3gugX4&sa=D&source=editors&ust=1732590707041683&usg=AOvVaw2MsgmGEyp4CbgzRDm4y3US",
             "percent": 100,
             "hz": 360
         }
