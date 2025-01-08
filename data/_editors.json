@@ -16,12 +16,12 @@
     },
     {
         "role": "trial",
-        "name": "None",
+        "name": "N/A",
         "link": "Abc"
     },
     {
         "role": "dev",
-        "name": "None",
+        "name": "N/A",
         "link": "Abc"
     }
 ]
