@@ -104,7 +104,7 @@ export default {
         // Hide loading spinner
         this.loading = false;
         
-        // Apply dark golden color to the first place user's rank, name, and score after data has been loaded
+        // Apply golden color to the first place user's rank, name, and score after data has been loaded
         this.applyGoldEffect();
     },
     methods: {
@@ -124,12 +124,12 @@ export default {
             });
         },
         addGoldColor(element) {
-            // Apply a darker golden color to the text of the first place elements
-            const darkGoldColor = '#B8860B';  // Dark golden color
+            // Apply a lighter, yellowish golden color to the text of the first place elements
+            const goldColor = '#FFD700';  // Lighter gold color
 
             element.style.transition = "all 0.5s ease-in-out";
             element.style.fontWeight = 'bold';
-            element.style.color = darkGoldColor; // Set the dark golden color
+            element.style.color = goldColor; // Set the gold color
         }
     },
 };
