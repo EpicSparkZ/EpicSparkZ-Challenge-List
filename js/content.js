@@ -7,18 +7,22 @@ const dir = '/data';
 
 export async function fetchList() {
     const listResult = await fetch(`${dir}/_list.json`);
+    const packResult = await fetch(`${dir}/_packlist.json`);
     try {
         const list = await listResult.json();
-
-        // Fetching all levels
-        const result = await Promise.all(
+        const packsList = await packResult.json();
+        return await Promise.all(
             list.map(async (path, rank) => {
                 const levelResult = await fetch(`${dir}/${path}.json`);
                 try {
                     const level = await levelResult.json();
+                    let packs = packsList.filter((x) =>
+                        x.levels.includes(path)
+                    );
                     return [
                         {
                             ...level,
+                            packs,
                             path,
                             records: level.records.sort(
                                 (a, b) => b.percent - a.percent,
@@ -30,8 +34,13 @@ export async function fetchList() {
                     console.error(`Failed to load level #${rank + 1} ${path}.`);
                     return [null, path];
                 }
-            })
+            }),
         );
+    } catch {
+        console.error(`Failed to load list.`);
+        return null;
+    }
+}
 
         // Ensure "HAUNTED.json" is always at the end of the list
         if (!list.includes("HAUNTED.json")) {
