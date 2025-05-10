@@ -63,7 +63,7 @@ export default {
                         </li>
                         <li>
                             <div class="type-title-sm">Enjoyment Rating</div>
-                            <p>{{ level.password || 'N/A' }}</p>
+                            <p>{{ level.password ? level.password : 'N/A' }}</p>
                         </li>
                     </ul>
                     <h2>Records</h2>
