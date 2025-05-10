@@ -26,8 +26,6 @@ export default {
                     <tr
                         v-for="([level, err], i) in list"
                         :key="i"
-                        :ref="el => levelRows[i] = el"
-                        :style="rowStyles[i]"
                     >
                         <td class="rank">
                             <p
@@ -140,7 +138,6 @@ export default {
         store,
         tributeColor: '#ff0000',
         tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)',
-        rowStyles: [],
         levelRows: [],
     }),
     computed: {
@@ -171,26 +168,7 @@ export default {
             }
         }
 
-        // Set initial invisible styles
-        this.rowStyles = this.list.map(() => ({
-            opacity: 0,
-            transform: 'translateX(-20px)',
-            transition: 'all 0.5s ease-out'
-        }));
-
         this.loading = false;
-
-        this.$nextTick(() => {
-            this.levelRows.forEach((_, i) => {
-                setTimeout(() => {
-                    this.$set(this.rowStyles, i, {
-                        opacity: 1,
-                        transform: 'translateX(0)',
-                        transition: 'all 0.5s ease-out'
-                    });
-                }, i * 100);
-            });
-        });
 
         this.startRainbowEffect();
     },
