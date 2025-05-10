@@ -151,7 +151,7 @@ export default {
             element.style.transition = "all 0.5s ease-in-out";
             element.style.fontWeight = 'bold';
             element.style.color = color; // Set the color (Gold, Silver, or Bronze)
-            element.style.animation = `${animationName} 2s infinite alternate`; // Apply faster animation (2s duration)
+            element.style.animation = `${animationName} 4s infinite alternate`; // Apply slower animation (4s duration)
         }
     },
 };
@@ -161,7 +161,7 @@ const style = document.createElement('style');
 style.innerHTML = `
     @keyframes breathingGold {
         0% {
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.75), 0 0 10px rgba(255, 215, 0, 0.75), 0 0 15px rgba(255, 215, 0, 0.75), 0 0 20px rgba(255, 215, 0, 0.75);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.65), 0 0 10px rgba(255, 215, 0, 0.65), 0 0 15px rgba(255, 215, 0, 0.65), 0 0 20px rgba(255, 215, 0, 0.65);
         }
         100% {
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.25), 0 0 30px rgba(255, 215, 0, 0.25), 0 0 40px rgba(255, 215, 0, 0.25), 0 0 50px rgba(255, 215, 0, 0.25);
@@ -169,7 +169,7 @@ style.innerHTML = `
     }
     @keyframes breathingSilver {
         0% {
-            text-shadow: 0 0 5px rgba(192, 192, 192, 0.75), 0 0 10px rgba(192, 192, 192, 0.75), 0 0 15px rgba(192, 192, 192, 0.75), 0 0 20px rgba(192, 192, 192, 0.75);
+            text-shadow: 0 0 5px rgba(192, 192, 192, 0.65), 0 0 10px rgba(192, 192, 192, 0.65), 0 0 15px rgba(192, 192, 192, 0.65), 0 0 20px rgba(192, 192, 192, 0.65);
         }
         100% {
             text-shadow: 0 0 20px rgba(192, 192, 192, 0.25), 0 0 30px rgba(192, 192, 192, 0.25), 0 0 40px rgba(192, 192, 192, 0.25), 0 0 50px rgba(192, 192, 192, 0.25);
@@ -177,7 +177,7 @@ style.innerHTML = `
     }
     @keyframes breathingBronze {
         0% {
-            text-shadow: 0 0 5px rgba(205, 127, 50, 0.75), 0 0 10px rgba(205, 127, 50, 0.75), 0 0 15px rgba(205, 127, 50, 0.75), 0 0 20px rgba(205, 127, 50, 0.75);
+            text-shadow: 0 0 5px rgba(205, 127, 50, 0.65), 0 0 10px rgba(205, 127, 50, 0.65), 0 0 15px rgba(205, 127, 50, 0.65), 0 0 20px rgba(205, 127, 50, 0.65);
         }
         100% {
             text-shadow: 0 0 20px rgba(205, 127, 50, 0.25), 0 0 30px rgba(205, 127, 50, 0.25), 0 0 40px rgba(205, 127, 50, 0.25), 0 0 50px rgba(205, 127, 50, 0.25);
