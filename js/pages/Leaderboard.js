@@ -35,12 +35,7 @@ export default {
                             </td>
                             <td class="user" :class="{ 'active': selected == i }">
                                 <button @click="selected = i">
-                                    <span 
-                                        class="type-label-lg" 
-                                        :class="{ 'first-place-glow': i === 0 }"
-                                    >
-                                        {{ ientry.user }}
-                                    </span>
+                                    <span class="type-label-lg">{{ ientry.user }}</span>
                                 </button>
                             </td>
                         </tr>
@@ -48,10 +43,7 @@ export default {
                 </div>
                 <div class="player-container">
                     <div class="player">
-                        <h1>
-                            <span v-if="selected === 0" class="first-place-glow">🏆 #1 {{ entry.user }}</span>
-                            <span v-else>#{{ selected + 1 }} {{ entry.user }}</span>
-                        </h1>
+                        <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
                         <h3>{{ entry.total }}</h3>
                         <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length}})</h2>
                         <table class="table">
@@ -111,6 +103,32 @@ export default {
         this.err = err;
         // Hide loading spinner
         this.loading = false;
+
+        this.$nextTick(() => {
+            const firstRow = this.$el.querySelector('.board tr');
+            if (firstRow) {
+                const glowStyle = `
+                    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+                    background-size: 400% 400%;
+                    animation: rainbowGlow 4s ease infinite;
+                    color: white;
+                    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+                `;
+                firstRow.style.cssText += glowStyle;
+
+                const keyframes = `
+                    @keyframes rainbowGlow {
+                        0% { background-position: 0% 50%; }
+                        50% { background-position: 100% 50%; }
+                        100% { background-position: 0% 50%; }
+                    }
+                `;
+                const styleSheet = document.createElement("style");
+                styleSheet.type = "text/css";
+                styleSheet.innerText = keyframes;
+                document.head.appendChild(styleSheet);
+            }
+        });
     },
     methods: {
         localize,
