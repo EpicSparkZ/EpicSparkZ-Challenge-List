@@ -33,7 +33,7 @@ export async function fetchList() {
 
         // Fetch HAUNTED.json and always append it
         try {
-            const hauntedResult = await fetch(`${dir}/HAUNTED.son`);
+            const hauntedResult = await fetch(`${dir}/HAUNTED.json`);
             const haunted = await hauntedResult.json();
             result.push([
                 {
