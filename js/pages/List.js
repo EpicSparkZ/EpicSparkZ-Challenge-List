@@ -25,22 +25,14 @@ export default {
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
-                            <!-- Special labels for the top 3 levels -->
                             <p
-                                v-if="i === 0"
+                                v-if="level?.name === 'HAUNTED'"
                                 class="type-label-lg"
-                                style="color: gold;"
-                            >#1</p>
-                            <p
-                                v-else-if="i === 1"
-                                class="type-label-lg"
-                                style="color: silver;"
-                            >#2</p>
-                            <p
-                                v-else-if="i === 2"
-                                class="type-label-lg"
-                                style="color: bronze;"
-                            >#3</p>
+                                :style="{ color: tributeColor }"
+                            >Tribute</p>
+                            <p v-else-if="i === 0" class="type-label-lg" style="color: gold;">#1</p>
+                            <p v-else-if="i === 1" class="type-label-lg" style="color: silver;">#2</p>
+                            <p v-else-if="i === 2" class="type-label-lg" style="color: #cd7f32;">#3</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
@@ -79,7 +71,7 @@ export default {
                     </ul>
                     <h2>Records</h2>
                     <p v-if="selected + 1 <= 75"><strong>{{ level.percentToQualify }}%</strong> or better to qualify</p>
-                    <p v-else-if="selected +1 <= 150"><strong>100%</strong> or better to qualify</p>
+                    <p v-else-if="selected + 1 <= 150"><strong>100%</strong> or better to qualify</p>
                     <p v-else>This level does not accept new records.</p>
                     <table class="records">
                         <tr v-for="record in level.records" class="record">
@@ -167,7 +159,7 @@ export default {
             this.errors.push(
                 ...this.list
                     .filter(([_, err]) => err)
-                    .map(([_, err]) => `Failed to load level. (${err}.json)`)
+                    .map(([_, err]) => \`Failed to load level. (\${err}.json)\`)
             );
             if (!this.editors) {
                 this.errors.push("Failed to load list editors.");
@@ -196,9 +188,9 @@ export default {
             };
 
             setInterval(() => {
-                this.tributeColor = `hsl(${hue}, 100%, 65%)`;
+                this.tributeColor = \`hsl(\${hue}, 100%, 65%)\`;
                 const [r, g, b] = hslToRgb(hue, 100, 65);
-                this.tributeGlow = `0 0 15px rgba(${r}, ${g}, ${b}, 0.80)`;
+                this.tributeGlow = \`0 0 15px rgba(\${r}, \${g}, \${b}, 0.80)\`;
                 hue = (hue + speed) % 360;
             }, interval);
         }
