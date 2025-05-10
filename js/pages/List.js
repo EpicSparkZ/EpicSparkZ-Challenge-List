@@ -169,33 +169,11 @@ export default {
 
         this.loading = false;
 
-        this.startRainbowEffect();
         this.startBreathingEffect();
     },
     methods: {
         embed,
         score,
-        startRainbowEffect() {
-            let hue = 0;
-            const interval = 85;
-            const speed = 5;
-
-            const hslToRgb = (h, s, l) => {
-                s /= 100;
-                l /= 100;
-                const k = n => (n + h / 30) % 12;
-                const a = s * Math.min(l, 1 - l);
-                const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-                return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
-            };
-
-            setInterval(() => {
-                this.tributeColor = `hsl(${hue}, 100%, 65%)`;
-                const [r, g, b] = hslToRgb(hue, 100, 65);
-                this.tributeGlow = `0 0 15px rgba(${r}, ${g}, ${b}, 0.80)`;
-                hue = (hue + speed) % 360;
-            }, interval);
-        },
         rankStyle(rank) {
             const colors = ['gold', 'silver', '#cd7f32'];
             let color = colors[rank];
