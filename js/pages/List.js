@@ -170,7 +170,7 @@ export default {
             setInterval(() => {
                 this.tributeColor = colors[i];  // Update the tributeColor data property
                 i = (i + 1) % colors.length;  // Cycle through colors
-            }, 500); // Update every 200ms for faster transitions
+            }, 1000); // Update every 200ms for faster transitions
         }
     }
 };
