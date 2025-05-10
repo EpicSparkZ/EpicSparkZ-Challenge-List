@@ -28,7 +28,12 @@ export default {
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
                             <td class="rank">
-                                <p class="type-label-lg">{{ i === 0 ? '🏆' : '#' + (i + 1) }}</p>
+                                <span v-if="i === 0">
+                                    <img src="/assets/trophy1.svg" alt="1st Place Trophy" class="trophy-icon" />
+                                </span>
+                                <span v-else>
+                                    <p class="type-label-lg">#{{ i + 1 }}</p>
+                                </span>
                             </td>
                             <td class="total">
                                 <p class="type-label-lg">{{ localize(ientry.total) }}</p>
@@ -45,7 +50,7 @@ export default {
                     <div class="player">
                         <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
                         <h3>{{ entry.total }}</h3>
-                        <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length}})</h2>
+                        <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length }})</h2>
                         <table class="table">
                             <tr v-for="score in entry.verified">
                                 <td class="rank">
