@@ -104,7 +104,7 @@ export default {
         // Hide loading spinner
         this.loading = false;
         
-        // Apply golden color to the first place user's rank, name, and score after data has been loaded
+        // Apply golden color and breathing effect to the first place user's rank, name, and score
         this.applyGoldEffect();
     },
     methods: {
@@ -117,19 +117,37 @@ export default {
                 const firstPlaceTotal = document.querySelector('#total-0');
                 
                 if (firstPlaceRank && firstPlaceUsername && firstPlaceTotal) {
-                    this.addGoldColor(firstPlaceRank);
-                    this.addGoldColor(firstPlaceUsername);
-                    this.addGoldColor(firstPlaceTotal);
+                    this.addGoldColorWithBreathingEffect(firstPlaceRank);
+                    this.addGoldColorWithBreathingEffect(firstPlaceUsername);
+                    this.addGoldColorWithBreathingEffect(firstPlaceTotal);
                 }
             });
         },
-        addGoldColor(element) {
-            // Apply a lighter, yellowish golden color to the text of the first place elements
+        addGoldColorWithBreathingEffect(element) {
+            // Apply a golden color with a breathing effect
             const goldColor = '#FFD700';  // Lighter gold color
-
             element.style.transition = "all 0.5s ease-in-out";
             element.style.fontWeight = 'bold';
             element.style.color = goldColor; // Set the gold color
+
+            // Add the breathing golden glow using box-shadow
+            element.style.animation = "breathingGlow 2s infinite alternate";
         }
     },
 };
+
+// Add the breathing glow animation in CSS
+const style = document.createElement('style');
+style.innerHTML = `
+    @keyframes breathingGlow {
+        0% {
+            text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700, 0 0 20px #FFD700;
+            box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700, 0 0 20px #FFD700;
+        }
+        100% {
+            text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700, 0 0 50px #FFD700;
+            box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700, 0 0 50px #FFD700;
+        }
+    }
+`;
+document.head.appendChild(style);
