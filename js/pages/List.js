@@ -158,7 +158,6 @@ export default {
         }
 
         this.loading = false;
-        this.startBreathingEffect();
     },
     methods: {
         embed,
@@ -168,23 +167,8 @@ export default {
             let color = colors[rank];
             return {
                 color: color,
-                textShadow: `0 0 5px ${color}, 0 0 10px ${color}, 0 0 15px ${color}`,
-                animation: 'breathingGlow 3s infinite alternate'
+                textShadow: `0 0 5px ${color}, 0 0 10px ${color}, 0 0 15px ${color}`
             };
-        },
-        startBreathingEffect() {
-            const style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes breathingGlow {
-                    0% {
-                        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-                    }
-                    100% {
-                        text-shadow: 0 0 15px rgba(255, 255, 255, 1);
-                    }
-                }
-            `;
-            document.head.appendChild(style);
         }
     }
 };
