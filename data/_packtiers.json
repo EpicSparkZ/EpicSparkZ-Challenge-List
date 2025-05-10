@@ -1,19 +1,9 @@
 [
     {
-        "name": "NAMEOFTIER",
-        "color": "COLOURHEX",
+        "name": "Testing tier",
+        "color": "#9F2B68",
         "packs": [
-            "NONE",
-            "NONE"
-        ]
-    }
-],
-[
-    {
-        "name": "NAMEOFTIER",
-        "color": "COLOURHEX",
-        "packs": [
-            "NONE",
+            "",
             "NONE"
         ]
     }
