@@ -1,4 +1,4 @@
-const levelList = [
+[
     "Hitboxes_Are_Funny",
     "W_O_A_H",
     "firing_squad_Me_Layo",
@@ -28,9 +28,4 @@ const levelList = [
     "Da_Ball",
     "C_H_I_L_L_I_N_G",
     "Wave_Challeng_2"
-];
-
-// Always push 'HAUNTED.json' to the end of the list
-levelList.push("HAUNTED.json");
-
-console.log(levelList); // To verify the result
+]
