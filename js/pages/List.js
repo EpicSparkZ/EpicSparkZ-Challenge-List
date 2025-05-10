@@ -25,14 +25,18 @@ export default {
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
-                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg rainbow-text rainbow-glow" :style="{ color: tributeColor }">Tribute</p>
+                            <p
+                                v-if="level?.name === 'HAUNTED'"
+                                class="type-label-lg"
+                                :style="{ color: tributeColor }"
+                            >Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
                         </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span class="type-label-lg">{{ level?.name || `Error (${err}.json)` }}</span>
+                                <span class="type-label-lg">{{ level?.name || \`Error (\${err}.json)\` }}</span>
                             </button>
                         </td>
                     </tr>
@@ -40,7 +44,12 @@ export default {
             </div>
             <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
                 <div class="level" v-if="level">
-                    <h1 :class="{ 'rainbow-title': level.name === 'HAUNTED' }" :style="level.name === 'HAUNTED' ? { color: tributeColor } : {}">{{ level.name }}</h1>
+                    <h1
+                        :class="{ 'rainbow-title': level.name === 'HAUNTED' }"
+                        :style="level.name === 'HAUNTED' ? { color: tributeColor } : {}"
+                    >
+                        {{ level.name }}
+                    </h1>
                     <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
                     <iframe class="video" id="videoframe" :src="video" frameborder="0"></iframe>
                     <ul class="stats">
@@ -70,7 +79,7 @@ export default {
                                 <a :href="record.link" target="_blank" class="type-label-lg">{{ record.user }}</a>
                             </td>
                             <td class="mobile">
-                                <img v-if="record.mobile" :src="`/assets/phone-landscape${store.dark ? '-dark' : ''}.svg`" alt="Mobile">
+                                <img v-if="record.mobile" :src="\`/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\`" alt="Mobile">
                             </td>
                             <td class="hz">
                                 <p>{{ record.hz }}Hz</p>
@@ -94,7 +103,7 @@ export default {
                         <h3>List Editors</h3>
                         <ol class="editors">
                             <li v-for="editor in editors">
-                                <img :src="`/assets/${roleIconMap[editor.role]}${store.dark ? '-dark' : ''}.svg`" :alt="editor.role">
+                                <img :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`" :alt="editor.role">
                                 <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
                                 <p v-else>{{ editor.name }}</p>
                             </li>
@@ -121,8 +130,7 @@ export default {
         errors: [],
         roleIconMap,
         store,
-        tributeColor: '#ff0000',
-        tributeHue: 0,
+        tributeColor: '#ff0000', // Default initial color
     }),
     computed: {
         level() {
@@ -154,37 +162,21 @@ export default {
             }
         }
 
-        if (this.level?.name === "HAUNTED") {
-            this.startTributeColorCycle();
-        }
+        // Start tribute rainbow effect
+        this.startRainbowEffect();
 
         this.loading = false;
     },
     methods: {
         embed,
         score,
-        startTributeColorCycle() {
+        startRainbowEffect() {
+            let hue = 0;
+            const interval = 50; // update every 50ms
             setInterval(() => {
-                this.tributeHue = (this.tributeHue + 5) % 360;
-                this.tributeColor = `hsl(${this.tributeHue}, 100%, 70%)`;
-            }, 800);
-        },
+                this.tributeColor = `hsl(${hue}, 100%, 65%)`;
+                hue = (hue + 5) % 360; // smoother, slower shift
+            }, interval);
+        }
     },
 };
-
-// CSS (can be in a <style> tag or global stylesheet)
-// Add these styles somewhere in your CSS:
-/*
-.rainbow-text {
-    font-weight: bold;
-    transition: color 0.8s linear;
-}
-
-.rainbow-glow {
-    text-shadow:
-        0 0 4px white,
-        0 0 10px currentColor,
-        0 0 20px currentColor,
-        0 0 30px currentColor;
-}
-*/
