@@ -158,17 +158,38 @@ export default {
         }
 
         this.loading = false;
+        this.startBreathingEffect();
     },
     methods: {
         embed,
         score,
         rankStyle(rank) {
             const colors = ['gold', 'silver', '#cd7f32'];
+            const glowColors = ['#FFD700', '#C0C0C0', '#CD7F32'];  // Gold, Silver, Bronze colors
             let color = colors[rank];
+            let glowColor = glowColors[rank];
             return {
                 color: color,
-                textShadow: `0 0 5px ${color}, 0 0 10px ${color}, 0 0 15px ${color}`
+                textShadow: `0 0 5px ${glowColor}, 0 0 10px ${glowColor}, 0 0 15px ${glowColor}`,
+                animation: `breathing 2s ease-in-out infinite`
             };
+        },
+        startBreathingEffect() {
+            const styles = document.createElement('style');
+            styles.innerHTML = `
+                @keyframes breathing {
+                    0% {
+                        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 15px rgba(255, 215, 0, 0.5);
+                    }
+                    50% {
+                        text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 1);
+                    }
+                    100% {
+                        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 15px rgba(255, 215, 0, 0.5);
+                    }
+                }
+            `;
+            document.head.appendChild(styles);
         }
     }
 };
