@@ -27,7 +27,7 @@ export default {
                         <td class="rank">
                             <p v-if="i + 1 <= 28" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 75" class="type-label-lg">Legacy</p>
-                            <p v-else class="type-label-lg">Testing</p>
+                            <p v-else class="type-label-lg">Super Legacy</p>
                             </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
