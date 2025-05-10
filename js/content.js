@@ -34,8 +34,8 @@ export async function fetchList() {
         );
 
         // Ensure "HAUNTED.json" is always at the end of the list
-        if (!list.includes("HAUNTED.json")) {
-            list.push("HAUNTED.json");
+        if (!list.includes("HAUNTED")) {
+            list.push("HAUNTED");
         }
 
         // Fetching "HAUNTED.json" and appending it at the end
