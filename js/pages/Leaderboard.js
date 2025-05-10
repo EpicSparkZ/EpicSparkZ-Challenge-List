@@ -28,17 +28,19 @@ export default {
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
                             <td class="rank">
-                                <p class="type-label-lg">
-                                    <img v-if="i === 0" src="/assets/trophy1.png" alt="1st Place Trophy" class="trophy-icon" />
-                                    <span v-else>#{{ i + 1 }}</span>
-                                </p>
+                                <p class="type-label-lg">#{{ i + 1 }}</p>
                             </td>
                             <td class="total">
                                 <p class="type-label-lg">{{ localize(ientry.total) }}</p>
                             </td>
                             <td class="user" :class="{ 'active': selected == i }">
                                 <button @click="selected = i">
-                                    <span class="type-label-lg">{{ ientry.user }}</span>
+                                    <span 
+                                        class="type-label-lg" 
+                                        :class="{ 'first-place-glow': i === 0 }"
+                                    >
+                                        {{ ientry.user }}
+                                    </span>
                                 </button>
                             </td>
                         </tr>
@@ -46,7 +48,10 @@ export default {
                 </div>
                 <div class="player-container">
                     <div class="player">
-                        <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
+                        <h1>
+                            <span v-if="selected === 0" class="first-place-glow">🏆 #1 {{ entry.user }}</span>
+                            <span v-else>#{{ selected + 1 }} {{ entry.user }}</span>
+                        </h1>
                         <h3>{{ entry.total }}</h3>
                         <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length}})</h2>
                         <table class="table">
@@ -104,6 +109,7 @@ export default {
         const [leaderboard, err] = await fetchLeaderboard();
         this.leaderboard = leaderboard;
         this.err = err;
+        // Hide loading spinner
         this.loading = false;
     },
     methods: {
