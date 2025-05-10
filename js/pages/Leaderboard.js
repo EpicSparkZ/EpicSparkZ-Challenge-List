@@ -138,7 +138,7 @@ style.innerHTML = `
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.0);
         }
         100% {
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.65);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
         }
     }
     @keyframes breathingSilver {
@@ -146,7 +146,7 @@ style.innerHTML = `
             text-shadow: 0 0 5px rgba(192, 192, 192, 0.0);
         }
         100% {
-            text-shadow: 0 0 20px rgba(192, 192, 192, 0.65);
+            text-shadow: 0 0 20px rgba(192, 192, 192, 0.8);
         }
     }
     @keyframes breathingBronze {
@@ -154,7 +154,7 @@ style.innerHTML = `
             text-shadow: 0 0 5px rgba(205, 127, 50, 0.0);
         }
         100% {
-            text-shadow: 0 0 20px rgba(205, 127, 50, 0.65);
+            text-shadow: 0 0 20px rgba(205, 127, 50, 0.8);
         }
     }
 `;
