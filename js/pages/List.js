@@ -28,11 +28,6 @@ export default {
                         :key="i"
                     >
                         <td class="rank">
-                            <p
-                                v-if="level?.name === 'HAUNTED'"
-                                class="type-label-lg"
-                                :style="{ color: tributeColor }"
-                            >Tribute</p>
                             <p v-else-if="i === 0" class="type-label-lg" style="color: gold;">#1</p>
                             <p v-else-if="i === 1" class="type-label-lg" style="color: silver;">#2</p>
                             <p v-else-if="i === 2" class="type-label-lg" style="color: #cd7f32;">#3</p>
@@ -42,7 +37,7 @@ export default {
                         </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span class="type-label-lg" :style="i === 0 ? { color: 'gold' } : i === 1 ? { color: 'silver' } : i === 2 ? { color: '#cd7f32' } : {}">
+                                <span class="type-label-lg">
                                     {{ level?.name || \`Error (\${err}.json)\` }}
                                 </span>
                             </button>
