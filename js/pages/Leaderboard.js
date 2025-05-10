@@ -27,11 +27,11 @@ export default {
                 <div class="board-container">
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
-                            <td class="rank" :id="'rank-' + i">
-                                <p class="type-label-lg">#{{ i + 1 }}</p>
+                            <td class="rank">
+                                <p class="type-label-lg" :id="'rank-' + i">#{{ i + 1 }}</p>
                             </td>
-                            <td class="total" :id="'total-' + i">
-                                <p class="type-label-lg">{{ localize(ientry.total) }}</p>
+                            <td class="total">
+                                <p class="type-label-lg" :id="'total-' + i">{{ localize(ientry.total) }}</p>
                             </td>
                             <td class="user" :class="{ 'active': selected == i }">
                                 <button @click="selected = i">
@@ -124,13 +124,13 @@ export default {
             });
         },
         addGoldColorWithBreathingEffect(element) {
-            // Apply a golden color with a breathing effect
+            // Apply a golden color with a breathing effect to text itself
             const goldColor = '#FFD700';  // Lighter gold color
             element.style.transition = "all 0.5s ease-in-out";
             element.style.fontWeight = 'bold';
             element.style.color = goldColor; // Set the gold color
 
-            // Add the breathing golden glow using box-shadow
+            // Add the breathing golden glow using text-shadow (instead of box-shadow)
             element.style.animation = "breathingGlow 2s infinite alternate";
         }
     },
@@ -142,11 +142,9 @@ style.innerHTML = `
     @keyframes breathingGlow {
         0% {
             text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700, 0 0 20px #FFD700;
-            box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700, 0 0 20px #FFD700;
         }
         100% {
             text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700, 0 0 50px #FFD700;
-            box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700, 0 0 50px #FFD700;
         }
     }
 `;
