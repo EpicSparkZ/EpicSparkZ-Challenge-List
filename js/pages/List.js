@@ -16,37 +16,24 @@ const roleIconMap = {
 
 export default {
     components: { Spinner, LevelAuthors },
-    template: `
+    template: 
         <main v-if="loading">
             <Spinner></Spinner>
         </main>
         <main v-else class="page-list">
-            <style scoped>
-                .rip-label {
-                    animation: colorCycle 2s infinite;
-                    font-weight: bold;
-                }
-
-                @keyframes colorCycle {
-                    0% { color: red; }
-                    25% { color: orange; }
-                    50% { color: yellow; }
-                    75% { color: magenta; }
-                    100% { color: red; }
-                }
-            </style>
             <div class="list-container">
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
-                        <td class="rank">
-                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg rip-label">RIP</p>
-                            <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
-                            <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
-                            <p v-else class="type-label-lg">Super Legacy</p>
-                        </td>
+<td class="rank">
+    <p v-if="level?.name === 'HAUNTED'" class="type-label-lg">RIP</p>
+    <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
+    <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
+    <p v-else class="type-label-lg">Super Legacy</p>
+</td>
+
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span class="type-label-lg">{{ level?.name || `Error (${err}.json)` }}</span>
+                                <span class="type-label-lg">{{ level?.name || \Error (\${err}.json)\ }}</span>
                             </button>
                         </td>
                     </tr>
@@ -84,7 +71,7 @@ export default {
                                 <a :href="record.link" target="_blank" class="type-label-lg">{{ record.user }}</a>
                             </td>
                             <td class="mobile">
-                                <img v-if="record.mobile" :src="`/assets/phone-landscape${store.dark ? '-dark' : ''}.svg`" alt="Mobile">
+                                <img v-if="record.mobile" :src="\/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\" alt="Mobile">
                             </td>
                             <td class="hz">
                                 <p>{{ record.hz }}Hz</p>
@@ -108,7 +95,7 @@ export default {
                         <h3>List Editors</h3>
                         <ol class="editors">
                             <li v-for="editor in editors">
-                                <img :src="`/assets/${roleIconMap[editor.role]}${store.dark ? '-dark' : ''}.svg`" :alt="editor.role">
+                                <img :src="\/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\" :alt="editor.role">
                                 <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
                                 <p v-else>{{ editor.name }}</p>
                             </li>
@@ -142,7 +129,7 @@ export default {
                 </div>
             </div>
         </main>
-    `,
+    ,
     data: () => ({
         list: [],
         editors: [],
@@ -183,7 +170,7 @@ export default {
                 ...this.list
                     .filter(([_, err]) => err)
                     .map(([_, err]) => {
-                        return `Failed to load level. (${err}.json)`;
+                        return Failed to load level. (${err}.json);
                     })
             );
             if (!this.editors) {
