@@ -16,7 +16,7 @@ const roleIconMap = {
 
 export default {
     components: { Spinner, LevelAuthors },
-    template: `
+    template: 
         <main v-if="loading">
             <Spinner></Spinner>
         </main>
@@ -42,7 +42,7 @@ export default {
                         </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span class="type-label-lg">{{ level?.name || \`Error (\${err}.json)\` }}</span>
+                                <span class="type-label-lg">{{ level?.name || \Error (\${err}.json)\ }}</span>
                             </button>
                         </td>
                     </tr>
@@ -85,7 +85,7 @@ export default {
                                 <a :href="record.link" target="_blank" class="type-label-lg">{{ record.user }}</a>
                             </td>
                             <td class="mobile">
-                                <img v-if="record.mobile" :src="\`/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\`" alt="Mobile">
+                                <img v-if="record.mobile" :src="\/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\" alt="Mobile">
                             </td>
                             <td class="hz">
                                 <p>{{ record.hz }}Hz</p>
@@ -109,7 +109,7 @@ export default {
                         <h3>List Editors</h3>
                         <ol class="editors">
                             <li v-for="editor in editors">
-                                <img :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`" :alt="editor.role">
+                                <img :src="\/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\" :alt="editor.role">
                                 <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
                                 <p v-else>{{ editor.name }}</p>
                             </li>
@@ -127,7 +127,7 @@ export default {
                 </div>
             </div>
         </main>
-    `,
+    ,
     data: () => ({
         list: [],
         editors: [],
@@ -138,6 +138,7 @@ export default {
         store,
         tributeColor: '#ff0000',
         tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)',
+        levelRows: [],
     }),
     computed: {
         level() {
@@ -160,7 +161,7 @@ export default {
             this.errors.push(
                 ...this.list
                     .filter(([_, err]) => err)
-                    .map(([_, err]) => `Failed to load level. (${err}.json)`)
+                    .map(([_, err]) => Failed to load level. (${err}.json))
             );
             if (!this.editors) {
                 this.errors.push("Failed to load list editors.");
@@ -169,29 +170,31 @@ export default {
 
         this.loading = false;
 
-        this.startBreathingEffect();
+        this.startRainbowEffect();
     },
     methods: {
         embed,
         score,
-        rankStyle(rank) {
-            const colors = ['gold', 'silver', '#cd7f32'];
-            let color = colors[rank];
-            return {
-                color: color,
-                textShadow: `0 0 15px ${color}`,
-                animation: 'breathingGlow 3s infinite alternate'
-            };
-        },
-        startBreathingEffect() {
-            const topRanks = [0, 1, 2];
+        startRainbowEffect() {
+            let hue = 0;
+            const interval = 85;
+            const speed = 5;
 
-            topRanks.forEach(rank => {
-                const rankElement = document.querySelectorAll('.rank')[rank];
-                if (rankElement) {
-                    rankElement.style.animation = 'breathingGlow 3s infinite alternate';
-                }
-            });
+            const hslToRgb = (h, s, l) => {
+                s /= 100;
+                l /= 100;
+                const k = n => (n + h / 30) % 12;
+                const a = s * Math.min(l, 1 - l);
+                const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+                return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
+            };
+
+            setInterval(() => {
+                this.tributeColor = hsl(${hue}, 100%, 65%);
+                const [r, g, b] = hslToRgb(hue, 100, 65);
+                this.tributeGlow = 0 0 15px rgba(${r}, ${g}, ${b}, 0.80);
+                hue = (hue + speed) % 360;
+            }, interval);
         }
     },
 };
