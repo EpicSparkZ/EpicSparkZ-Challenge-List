@@ -104,12 +104,12 @@ export default {
         // Hide loading spinner
         this.loading = false;
         
-        // Apply rainbow effect to the first place user's rank, name, and score after data has been loaded
-        this.applyRainbowEffect();
+        // Apply dark golden color to the first place user's rank, name, and score after data has been loaded
+        this.applyGoldEffect();
     },
     methods: {
         localize,
-        applyRainbowEffect() {
+        applyGoldEffect() {
             // Wait until the DOM has fully rendered to apply the effect
             this.$nextTick(() => {
                 const firstPlaceRank = document.querySelector('#rank-0');
@@ -117,21 +117,19 @@ export default {
                 const firstPlaceTotal = document.querySelector('#total-0');
                 
                 if (firstPlaceRank && firstPlaceUsername && firstPlaceTotal) {
-                    this.addRainbowGlow(firstPlaceRank);
-                    this.addRainbowGlow(firstPlaceUsername);
-                    this.addRainbowGlow(firstPlaceTotal);
+                    this.addGoldColor(firstPlaceRank);
+                    this.addGoldColor(firstPlaceUsername);
+                    this.addGoldColor(firstPlaceTotal);
                 }
             });
         },
-        addRainbowGlow(element) {
-            let colorIndex = 0;
-            const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+        addGoldColor(element) {
+            // Apply a darker golden color to the text of the first place elements
+            const darkGoldColor = '#B8860B';  // Dark golden color
 
-            // Set the text to cycle through rainbow colors every 500ms
-            setInterval(() => {
-                element.style.color = colors[colorIndex];
-                colorIndex = (colorIndex + 1) % colors.length;  // Cycle through the colors
-            }, 500);
+            element.style.transition = "all 0.5s ease-in-out";
+            element.style.fontWeight = 'bold';
+            element.style.color = darkGoldColor; // Set the dark golden color
         }
     },
 };
