@@ -103,59 +103,58 @@ export default {
         this.leaderboard = leaderboard;
         this.err = err;
         this.loading = false;
+        this.injectGlowStyles();
         this.applyRankEffects();
     },
     methods: {
         localize,
+        injectGlowStyles() {
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes breathingGold {
+                    0% { text-shadow: 0 0 5px rgba(255, 215, 0, 0); }
+                    100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+                }
+                @keyframes breathingSilver {
+                    0% { text-shadow: 0 0 5px rgba(192, 192, 192, 0); }
+                    100% { text-shadow: 0 0 20px rgba(192, 192, 192, 0.8); }
+                }
+                @keyframes breathingBronze {
+                    0% { text-shadow: 0 0 5px rgba(205, 127, 50, 0); }
+                    100% { text-shadow: 0 0 20px rgba(205, 127, 50, 0.8); }
+                }
+                .glow-gold {
+                    font-weight: bold;
+                    color: #FFD700;
+                    animation: breathingGold 3s infinite alternate;
+                }
+                .glow-silver {
+                    font-weight: bold;
+                    color: #C0C0C0;
+                    animation: breathingSilver 3s infinite alternate;
+                }
+                .glow-bronze {
+                    font-weight: bold;
+                    color: #CD7F32;
+                    animation: breathingBronze 3s infinite alternate;
+                }
+            `;
+            document.head.appendChild(style);
+        },
         applyRankEffects() {
             this.$nextTick(() => {
-                const applyEffect = (index, color, animationName) => {
+                const applyEffect = (index, className) => {
                     const rank = document.querySelector(`#rank-${index}`);
                     const user = document.querySelector(`#user-${index}`);
                     const total = document.querySelector(`#total-${index}`);
                     [rank, user, total].forEach(el => {
-                        if (el) this.addGlowEffect(el, color, animationName);
+                        if (el) el.classList.add(className);
                     });
                 };
-                applyEffect(0, '#FFD700', 'breathingGold');
-                applyEffect(1, '#C0C0C0', 'breathingSilver');
-                applyEffect(2, '#CD7F32', 'breathingBronze');
+                applyEffect(0, 'glow-gold');
+                applyEffect(1, 'glow-silver');
+                applyEffect(2, 'glow-bronze');
             });
-        },
-        addGlowEffect(element, color, animationName) {
-            element.style.transition = "all 0.5s ease-in-out";
-            element.style.fontWeight = 'bold';
-            element.style.color = color;
-            element.style.animation = `${animationName} 3s infinite alternate`;
         }
     },
 };
-
-const style = document.createElement('style');
-style.innerHTML = `
-    @keyframes breathingGold {
-        0% {
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.0);
-        }
-        100% {
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-        }
-    }
-    @keyframes breathingSilver {
-        0% {
-            text-shadow: 0 0 5px rgba(192, 192, 192, 0.0);
-        }
-        100% {
-            text-shadow: 0 0 20px rgba(192, 192, 192, 0.8);
-        }
-    }
-    @keyframes breathingBronze {
-        0% {
-            text-shadow: 0 0 5px rgba(205, 127, 50, 0.0);
-        }
-        100% {
-            text-shadow: 0 0 20px rgba(205, 127, 50, 0.8);
-        }
-    }
-`;
-document.head.appendChild(style);
