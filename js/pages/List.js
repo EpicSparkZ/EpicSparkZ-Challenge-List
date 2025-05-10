@@ -131,7 +131,7 @@ export default {
         roleIconMap,
         store,
         tributeColor: '#ff0000', // Default initial color
-        tributeGlow: '0 0 15px #ff0000', // Default glow with lower opacity
+        tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)', // Default glow with opacity 0.85
     }),
     computed: {
         level() {
@@ -180,8 +180,8 @@ export default {
                 // Set the tribute color based on HSL
                 this.tributeColor = `hsl(${hue}, 100%, 65%)`;
 
-                // Set the glow effect dynamically with lower opacity (alpha = 0.5)
-                this.tributeGlow = `0 0 15px hsl(${hue}, 100%, 65%, 0.5)`; // glow effect with opacity
+                // Set the glow effect dynamically with opacity (alpha = 0.85)
+                this.tributeGlow = `0 0 15px rgba(${Math.floor(hue * 255 / 360)}, 0, 0, 0.85)`; // glow effect with opacity 0.85
                 hue = (hue + speed) % 360; // Adjust hue change speed
             }, interval);
         }
