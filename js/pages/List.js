@@ -25,7 +25,7 @@ export default {
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
-                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg rip-label">Tribute</p>
+                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg rainbow-text">Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
@@ -38,9 +38,9 @@ export default {
                     </tr>
                 </table>
             </div>
-            <div class="level-container" :class="{ 'rip-background': level?.name === 'HAUNTED' }">
+            <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
                 <div class="level" v-if="level">
-                    <h1 :class="{ 'rip-title': level.name === 'HAUNTED' }">{{ level.name }}</h1>
+                    <h1 :class="{ 'rainbow-title': level.name === 'HAUNTED' }">{{ level.name }}</h1>
                     <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
                     <iframe class="video" id="videoframe" :src="video" frameborder="0"></iframe>
                     <ul class="stats">
@@ -158,4 +158,39 @@ export default {
         embed,
         score,
     },
+    style: `
+        /* Rainbow effect for text, title, and background */
+        @keyframes rainbowText {
+            0% { color: red; }
+            16% { color: orange; }
+            32% { color: yellow; }
+            48% { color: green; }
+            64% { color: blue; }
+            80% { color: indigo; }
+            100% { color: violet; }
+        }
+
+        @keyframes rainbowBg {
+            0% { background-color: #ff0000; }
+            16% { background-color: #ff7f00; }
+            32% { background-color: #ffff00; }
+            48% { background-color: #00ff00; }
+            64% { background-color: #0000ff; }
+            80% { background-color: #4b0082; }
+            100% { background-color: #8f00ff; }
+        }
+
+        .rainbow-text {
+            animation: rainbowText 4s linear infinite;
+            font-weight: bold;
+        }
+
+        .rainbow-title {
+            animation: rainbowText 3s linear infinite;
+        }
+
+        .rainbow-background {
+            animation: rainbowBg 10s linear infinite;
+        }
+    `
 };
