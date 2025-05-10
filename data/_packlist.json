@@ -1,16 +1,9 @@
 [
     {
-        "name": "NONE",
+        "name": "Test Pack",
         "levels": [
-            "NONE",
-            "NONE",
-            "NONE"
-        },
-        {
-        "name": "NONE",
-        "levels": [
-            "NONE",
-            "NONE",
-            "NONE"
+            "HORROR",
+            "HAUNTED",
+            "Peepee"
         }
 ]
