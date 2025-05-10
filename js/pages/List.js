@@ -23,16 +23,21 @@ export default {
         <main v-else class="page-list">
             <div class="list-container">
                 <table class="list" v-if="list">
-                    <tr v-for="([level, err], i) in list">
+                    <tr
+                        v-for="([level, err], i) in list"
+                        :key="i"
+                        ref="levelRows"
+                        :style="rowStyles[i]"
+                    >
                         <td class="rank">
                             <p
                                 v-if="level?.name === 'HAUNTED'"
                                 class="type-label-lg"
                                 :style="{ color: tributeColor }"
                             >Tribute</p>
-                            <p v-else-if="i === 0" class="type-label-lg" style="color: gold;">#1</p>
-                            <p v-else-if="i === 1" class="type-label-lg" style="color: silver;">#2</p>
-                            <p v-else-if="i === 2" class="type-label-lg" style="color: #cd7f32;">#3</p>
+                            <p v-else-if="i === 0" class="type-label-lg" style="color: gold">#1</p>
+                            <p v-else-if="i === 1" class="type-label-lg" style="color: silver">#2</p>
+                            <p v-else-if="i === 2" class="type-label-lg" :style="{ color: bronzeColor }">#3</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
@@ -71,7 +76,7 @@ export default {
                     </ul>
                     <h2>Records</h2>
                     <p v-if="selected + 1 <= 75"><strong>{{ level.percentToQualify }}%</strong> or better to qualify</p>
-                    <p v-else-if="selected + 1 <= 150"><strong>100%</strong> or better to qualify</p>
+                    <p v-else-if="selected +1 <= 150"><strong>100%</strong> or better to qualify</p>
                     <p v-else>This level does not accept new records.</p>
                     <table class="records">
                         <tr v-for="record in level.records" class="record">
@@ -135,6 +140,8 @@ export default {
         store,
         tributeColor: '#ff0000',
         tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)',
+        bronzeColor: '#cd7f32',
+        rowStyles: [],
     }),
     computed: {
         level() {
@@ -159,15 +166,33 @@ export default {
             this.errors.push(
                 ...this.list
                     .filter(([_, err]) => err)
-                    .map(([_, err]) => \`Failed to load level. (\${err}.json)\`)
+                    .map(([_, err]) => `Failed to load level. (${err}.json)`)
             );
             if (!this.editors) {
                 this.errors.push("Failed to load list editors.");
             }
         }
 
-        this.startRainbowEffect();
+        // Set default row styles for animation
+        this.rowStyles = Array(this.list.length).fill().map(() => ({
+            opacity: 0,
+            transform: 'translateX(-20px)',
+            transition: 'all 0.5s ease-out'
+        }));
 
+        this.$nextTick(() => {
+            this.$refs.levelRows.forEach((row, i) => {
+                setTimeout(() => {
+                    this.$set(this.rowStyles, i, {
+                        opacity: 1,
+                        transform: 'translateX(0)',
+                        transition: 'all 0.5s ease-out'
+                    });
+                }, i * 100);
+            });
+        });
+
+        this.startRainbowEffect();
         this.loading = false;
     },
     methods: {
@@ -188,9 +213,9 @@ export default {
             };
 
             setInterval(() => {
-                this.tributeColor = \`hsl(\${hue}, 100%, 65%)\`;
+                this.tributeColor = `hsl(${hue}, 100%, 65%)`;
                 const [r, g, b] = hslToRgb(hue, 100, 65);
-                this.tributeGlow = \`0 0 15px rgba(\${r}, \${g}, \${b}, 0.80)\`;
+                this.tributeGlow = `0 0 15px rgba(${r}, ${g}, ${b}, 0.80)`;
                 hue = (hue + speed) % 360;
             }, interval);
         }
