@@ -25,7 +25,7 @@ export default {
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
-                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg" ref="tributeTitle" :style="{ color: tributeColor }">Tribute</p>
+                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg" ref="tributeTitle" :style="{ color: tributeColor, transition: 'color 0.3s ease' }">Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
@@ -121,7 +121,7 @@ export default {
         errors: [],
         roleIconMap,
         store,
-        tributeColor: "red" // Initial color
+        tributeColor: "red", // Initial color
     }),
     computed: {
         level() {
@@ -170,7 +170,7 @@ export default {
             setInterval(() => {
                 this.tributeColor = colors[i];  // Update the tributeColor data property
                 i = (i + 1) % colors.length;  // Cycle through colors
-            }, 400); // Update every 400ms
+            }, 200); // Update every 200ms for faster transitions
         }
     }
 };
