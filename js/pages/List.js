@@ -28,7 +28,7 @@ export default {
                             <p
                                 v-if="level?.name === 'HAUNTED'"
                                 class="type-label-lg"
-                                :style="{ color: tributeColor, transition: 'color 0.8s linear' }"
+                                :style="{ color: tributeColor }"
                             >Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
@@ -44,7 +44,12 @@ export default {
             </div>
             <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
                 <div class="level" v-if="level">
-                    <h1 :class="{ 'rainbow-title': level.name === 'HAUNTED' }">{{ level.name }}</h1>
+                    <h1
+                        :class="{ 'rainbow-title': level.name === 'HAUNTED' }"
+                        :style="level.name === 'HAUNTED' ? { color: tributeColor } : {}"
+                    >
+                        {{ level.name }}
+                    </h1>
                     <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
                     <iframe class="video" id="videoframe" :src="video" frameborder="0"></iframe>
                     <ul class="stats">
@@ -125,7 +130,7 @@ export default {
         errors: [],
         roleIconMap,
         store,
-        tributeColor: "#ff0000", // initial color for Tribute
+        tributeColor: '#ff0000', // Default initial color
     }),
     computed: {
         level() {
@@ -157,20 +162,20 @@ export default {
             }
         }
 
-        this.loading = false;
-
-        // 🎨 Start Tribute color animation
+        // Start tribute rainbow effect
         this.startRainbowEffect();
+
+        this.loading = false;
     },
     methods: {
         embed,
         score,
         startRainbowEffect() {
             let hue = 0;
-            const interval = 800 / 24; // smooth 800ms cycle
+            const interval = 50; // update every 50ms
             setInterval(() => {
-                this.tributeColor = `hsl(${hue}, 100%, 50%)`;
-                hue = (hue + 15) % 360;
+                this.tributeColor = `hsl(${hue}, 100%, 65%)`;
+                hue = (hue + 5) % 360; // smoother, slower shift
             }, interval);
         }
     },
