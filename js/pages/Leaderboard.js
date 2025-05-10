@@ -110,20 +110,23 @@ export default {
     methods: {
         localize,
         applyRainbowEffect() {
-            const firstPlaceUsername = document.querySelector('#user-0');
-            if (firstPlaceUsername) {
-                this.addRainbowGlow(firstPlaceUsername);
-            }
+            // Wait until the DOM has fully rendered to apply the effect
+            this.$nextTick(() => {
+                const firstPlaceUsername = document.querySelector('#user-0');
+                if (firstPlaceUsername) {
+                    this.addRainbowGlow(firstPlaceUsername);
+                }
+            });
         },
         addRainbowGlow(element) {
             let colorIndex = 0;
             const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
-            
+
+            // Set the text to cycle through rainbow colors every 500ms
             setInterval(() => {
-                // Set the text color to the current color in the array
                 element.style.color = colors[colorIndex];
                 colorIndex = (colorIndex + 1) % colors.length;  // Cycle through the colors
-            }, 500);  // Change color every 500ms
+            }, 500);
         }
     },
 };
