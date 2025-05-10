@@ -170,7 +170,6 @@ export default {
         this.loading = false;
 
         this.startRainbowEffect();
-        this.startBreathingEffect();
     },
     methods: {
         embed,
@@ -201,33 +200,7 @@ export default {
             let color = colors[rank];
             return {
                 color: color,
-                animation: 'breathingGlow 3s infinite alternate'
             };
         },
-        startBreathingEffect() {
-            const breathingGlow = (element, maxGlow) => {
-                let glowAmount = 5;
-                let growing = true;
-
-                setInterval(() => {
-                    if (growing) {
-                        glowAmount += 1;
-                        if (glowAmount >= maxGlow) growing = false;
-                    } else {
-                        glowAmount -= 1;
-                        if (glowAmount <= 5) growing = true;
-                    }
-
-                    element.style.textShadow = `0 0 ${glowAmount}px rgba(255, 215, 0, 0.8)`;
-                }, 100);
-            };
-
-            // Select top 3 rankings and apply breathing effect
-            const topRanks = [0, 1, 2];
-            topRanks.forEach(rank => {
-                const rankElement = document.querySelectorAll('.rank')[rank];
-                breathingGlow(rankElement, 15);
-            });
-        }
     },
 };
