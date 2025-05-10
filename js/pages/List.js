@@ -33,9 +33,9 @@ export default {
                                 class="type-label-lg"
                                 :style="{ color: tributeColor }"
                             >Tribute</p>
-                            <p v-else-if="i === 0" class="type-label-lg" style="color: gold;">#1</p>
-                            <p v-else-if="i === 1" class="type-label-lg" style="color: silver;">#2</p>
-                            <p v-else-if="i === 2" class="type-label-lg" style="color: #cd7f32;">#3</p>
+                            <p v-else-if="i === 0" class="type-label-lg" :style="rankStyle(0)">#1</p>
+                            <p v-else-if="i === 1" class="type-label-lg" :style="rankStyle(1)">#2</p>
+                            <p v-else-if="i === 2" class="type-label-lg" :style="rankStyle(2)">#3</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
@@ -138,7 +138,6 @@ export default {
         store,
         tributeColor: '#ff0000',
         tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)',
-        levelRows: [],
     }),
     computed: {
         level() {
@@ -171,6 +170,7 @@ export default {
         this.loading = false;
 
         this.startRainbowEffect();
+        this.startBreathingEffect();
     },
     methods: {
         embed,
@@ -195,6 +195,39 @@ export default {
                 this.tributeGlow = `0 0 15px rgba(${r}, ${g}, ${b}, 0.80)`;
                 hue = (hue + speed) % 360;
             }, interval);
+        },
+        rankStyle(rank) {
+            const colors = ['gold', 'silver', '#cd7f32'];
+            let color = colors[rank];
+            return {
+                color: color,
+                animation: 'breathingGlow 3s infinite alternate'
+            };
+        },
+        startBreathingEffect() {
+            const breathingGlow = (element, maxGlow) => {
+                let glowAmount = 5;
+                let growing = true;
+
+                setInterval(() => {
+                    if (growing) {
+                        glowAmount += 1;
+                        if (glowAmount >= maxGlow) growing = false;
+                    } else {
+                        glowAmount -= 1;
+                        if (glowAmount <= 5) growing = true;
+                    }
+
+                    element.style.textShadow = `0 0 ${glowAmount}px rgba(255, 215, 0, 0.8)`;
+                }, 100);
+            };
+
+            // Select top 3 rankings and apply breathing effect
+            const topRanks = [0, 1, 2];
+            topRanks.forEach(rank => {
+                const rankElement = document.querySelectorAll('.rank')[rank];
+                breathingGlow(rankElement, 15);
+            });
         }
     },
 };
