@@ -14,5 +14,8 @@
             "percent": 100,
             "hz": 360
         }
-    ]
+    ],
+    "textBox": {
+        "value": "mrow meow :3"
+    }
 }
