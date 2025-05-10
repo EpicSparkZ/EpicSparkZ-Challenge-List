@@ -1,19 +1,19 @@
 import { round, score } from './score.js';
 
 /**
- * Path to directory containing `_list.json` and all levels
+ * Path to directory containing _list.json and all levels
  */
 const dir = '/data';
 
 export async function fetchList() {
-    const listResult = await fetch(`${dir}/_list.json`);
+    const listResult = await fetch(${dir}/_list.json);
     try {
         const list = await listResult.json();
 
         // Fetching all levels
         const result = await Promise.all(
             list.map(async (path, rank) => {
-                const levelResult = await fetch(`${dir}/${path}.json`);
+                const levelResult = await fetch(${dir}/${path}.json);
                 try {
                     const level = await levelResult.json();
                     return [
@@ -27,7 +27,7 @@ export async function fetchList() {
                         null,
                     ];
                 } catch {
-                    console.error(`Failed to load level #${rank + 1} ${path}.`);
+                    console.error(Failed to load level #${rank + 1} ${path}.);
                     return [null, path];
                 }
             })
@@ -39,7 +39,7 @@ export async function fetchList() {
         }
 
         // Fetching "HAUNTED.json" and appending it at the end
-        const hauntedLevelResult = await fetch(`${dir}/HAUNTED.json`);
+        const hauntedLevelResult = await fetch(${dir}/HAUNTED.json);
         try {
             const hauntedLevel = await hauntedLevelResult.json();
             result.push([
@@ -51,20 +51,20 @@ export async function fetchList() {
                 null,
             ]);
         } catch {
-            console.error(`Failed to load HAUNTED.json.`);
+            console.error(Failed to load HAUNTED.json.);
             result.push([null, "HAUNTED.json"]);
         }
 
         return result;
     } catch {
-        console.error(`Failed to load list.`);
+        console.error(Failed to load list.);
         return null;
     }
 }
 
 export async function fetchEditors() {
     try {
-        const editorsResults = await fetch(`${dir}/_editors.json`);
+        const editorsResults = await fetch(${dir}/_editors.json);
         const editors = await editorsResults.json();
         return editors;
     } catch {
