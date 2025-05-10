@@ -42,7 +42,9 @@ export default {
                         </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span class="type-label-lg">{{ level?.name || \`Error (\${err}.json)\` }}</span>
+                                <span class="type-label-lg" :style="i === 0 ? { color: 'gold' } : i === 1 ? { color: 'silver' } : i === 2 ? { color: '#cd7f32' } : {}">
+                                    {{ level?.name || \`Error (\${err}.json)\` }}
+                                </span>
                             </button>
                         </td>
                     </tr>
