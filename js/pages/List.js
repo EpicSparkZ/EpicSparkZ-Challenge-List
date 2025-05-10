@@ -28,7 +28,7 @@ export default {
                             <p
                                 v-if="level?.name === 'HAUNTED'"
                                 class="type-label-lg"
-                                :style="{ color: tributeColor, textShadow: glowEffect }"
+                                :style="{ color: tributeColor, textShadow: tributeGlow }"
                             >Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
@@ -46,7 +46,7 @@ export default {
                 <div class="level" v-if="level">
                     <h1
                         :class="{ 'rainbow-title': level.name === 'HAUNTED' }"
-                        :style="level.name === 'HAUNTED' ? { color: tributeColor, textShadow: glowEffect } : {}"
+                        :style="level.name === 'HAUNTED' ? { color: tributeColor, textShadow: tributeGlow } : {}"
                     >
                         {{ level.name }}
                     </h1>
@@ -131,7 +131,7 @@ export default {
         roleIconMap,
         store,
         tributeColor: '#ff0000', // Default initial color
-        glowEffect: '0 0 10px #ff0000', // Default glow effect
+        tributeGlow: '0 0 20px #ff0000', // Default glow
     }),
     computed: {
         level() {
@@ -173,15 +173,16 @@ export default {
         score,
         startRainbowEffect() {
             let hue = 0;
-            const interval = 850; // update every 850ms
-            const speed = 5; // moderate transition speed
+            const interval = 50; // Update every 50ms for a faster transition
+            const speed = 5; // Faster speed (increase this number for a quicker transition)
+            
             setInterval(() => {
                 // Set the tribute color based on HSL
                 this.tributeColor = `hsl(${hue}, 100%, 65%)`;
-                
-                // Set glow effect dynamically
-                this.glowEffect = `0 0 20px hsl(${hue}, 100%, 65%)`; // glow effect
-                hue = (hue + speed) % 360; // slower shift to get a smoother transition
+
+                // Set the glow effect dynamically
+                this.tributeGlow = `0 0 20px hsl(${hue}, 100%, 65%)`; // glow effect
+                hue = (hue + speed) % 360; // Adjust hue change speed
             }, interval);
         }
     },
