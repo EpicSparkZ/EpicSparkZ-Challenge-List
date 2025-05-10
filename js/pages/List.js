@@ -33,9 +33,9 @@ export default {
                                 class="type-label-lg"
                                 :style="{ color: tributeColor }"
                             >Tribute</p>
-                            <p v-else-if="i === 0" class="type-label-lg" :style="rankStyle(0)">#1</p>
-                            <p v-else-if="i === 1" class="type-label-lg" :style="rankStyle(1)">#2</p>
-                            <p v-else-if="i === 2" class="type-label-lg" :style="rankStyle(2)">#3</p>
+                            <p v-else-if="i === 0" class="type-label-lg" style="color: gold;">#1</p>
+                            <p v-else-if="i === 1" class="type-label-lg" style="color: silver;">#2</p>
+                            <p v-else-if="i === 2" class="type-label-lg" style="color: #cd7f32;">#3</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
@@ -138,6 +138,7 @@ export default {
         store,
         tributeColor: '#ff0000',
         tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)',
+        levelRows: [],
     }),
     computed: {
         level() {
@@ -194,13 +195,6 @@ export default {
                 this.tributeGlow = 0 0 15px rgba(${r}, ${g}, ${b}, 0.80);
                 hue = (hue + speed) % 360;
             }, interval);
-        },
-        rankStyle(rank) {
-            const colors = ['gold', 'silver', '#cd7f32'];
-            let color = colors[rank];
-            return {
-                color: color,
-            };
-        },
+        }
     },
 };
