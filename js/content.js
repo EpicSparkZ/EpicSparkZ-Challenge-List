@@ -9,7 +9,9 @@ export async function fetchList() {
     const listResult = await fetch(`${dir}/_list.json`);
     try {
         const list = await listResult.json();
-        return await Promise.all(
+
+        // Fetching all levels
+        const result = await Promise.all(
             list.map(async (path, rank) => {
                 const levelResult = await fetch(`${dir}/${path}.json`);
                 try {
@@ -28,8 +30,32 @@ export async function fetchList() {
                     console.error(`Failed to load level #${rank + 1} ${path}.`);
                     return [null, path];
                 }
-            }),
+            })
         );
+
+        // Ensure "HAUNTED.json" is always at the end of the list
+        if (!list.includes("HAUNTED.json")) {
+            list.push("HAUNTED.json");
+        }
+
+        // Fetching "HAUNTED.json" and appending it at the end
+        const hauntedLevelResult = await fetch(`${dir}/HAUNTED.json`);
+        try {
+            const hauntedLevel = await hauntedLevelResult.json();
+            result.push([
+                {
+                    ...hauntedLevel,
+                    path: "HAUNTED.json",
+                    records: hauntedLevel.records.sort((a, b) => b.percent - a.percent),
+                },
+                null,
+            ]);
+        } catch {
+            console.error(`Failed to load HAUNTED.json.`);
+            result.push([null, "HAUNTED.json"]);
+        }
+
+        return result;
     } catch {
         console.error(`Failed to load list.`);
         return null;
