@@ -6,39 +6,58 @@ import { round, score } from './score.js';
 const dir = '/data';
 
 export async function fetchList() {
-    const listResult = await fetch(${dir}/_list.json);
+    const listResult = await fetch(`${dir}/_list.json`);
     try {
         const list = await listResult.json();
-        return await Promise.all(
+
+        // Fetch all levels in _list.json
+        const result = await Promise.all(
             list.map(async (path, rank) => {
-                const levelResult = await fetch(${dir}/${path}.json);
+                const levelResult = await fetch(`${dir}/${path}.json`);
                 try {
                     const level = await levelResult.json();
                     return [
                         {
                             ...level,
                             path,
-                            records: level.records.sort(
-                                (a, b) => b.percent - a.percent,
-                            ),
+                            records: level.records.sort((a, b) => b.percent - a.percent),
                         },
                         null,
                     ];
                 } catch {
-                    console.error(Failed to load level #${rank + 1} ${path}.);
+                    console.error(`Failed to load level #${rank + 1} ${path}.`);
                     return [null, path];
                 }
             }),
         );
+
+        // Fetch HAUNTED.json and always append it
+        try {
+            const hauntedResult = await fetch(`${dir}/HAUNTED.json`);
+            const haunted = await hauntedResult.json();
+            result.push([
+                {
+                    ...haunted,
+                    path: "HAUNTED",
+                    records: haunted.records.sort((a, b) => b.percent - a.percent),
+                },
+                null,
+            ]);
+        } catch {
+            console.error(`Failed to load HAUNTED.json`);
+            result.push([null, "HAUNTED"]);
+        }
+
+        return result;
     } catch {
-        console.error(Failed to load list.);
+        console.error(`Failed to load list.`);
         return null;
     }
 }
 
 export async function fetchEditors() {
     try {
-        const editorsResults = await fetch(${dir}/_editors.json);
+        const editorsResults = await fetch(`${dir}/_editors.json`);
         const editors = await editorsResults.json();
         return editors;
     } catch {
