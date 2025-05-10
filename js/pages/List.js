@@ -24,7 +24,7 @@ export default {
             <div class="list-container">
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
-<!-- Change the number (<= 28") in "v-if=" sections to change the start of that section -->
+<!-- Change the number in (<= 28") sections to change the start of that section -->
 <td class="rank">
     <p
         v-if="i + 1 <= 28"
