@@ -173,7 +173,7 @@ export default {
         score,
         startRainbowEffect() {
             let hue = 0;
-            const interval = 50; // Update every 50ms for a faster transition
+            const interval = 85; // Update every 85ms for a quicker transition
             const speed = 5; // Faster speed (increase this number for a quicker transition)
             
             setInterval(() => {
