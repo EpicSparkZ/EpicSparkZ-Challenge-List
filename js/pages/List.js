@@ -38,9 +38,9 @@ export default {
                     </tr>
                 </table>
             </div>
-            <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
+            <div class="level-container" :class="{ 'rip-background': level?.name === 'HAUNTED' }">
                 <div class="level" v-if="level">
-                    <h1 :class="{ 'rainbow-title': level.name === 'HAUNTED' }">{{ level.name }}</h1>
+                    <h1 :class="{ 'rip-title': level.name === 'HAUNTED' }">{{ level.name }}</h1>
                     <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
                     <iframe class="video" id="videoframe" :src="video" frameborder="0"></iframe>
                     <ul class="stats">
@@ -158,21 +158,5 @@ export default {
         embed,
         score,
     },
-    style: `
-        /* Rainbow effect for Tribute title */
-        @keyframes rainbowText {
-            0% { color: red; }
-            16% { color: orange; }
-            32% { color: yellow; }
-            48% { color: green; }
-            64% { color: blue; }
-            80% { color: indigo; }
-            100% { color: violet; }
-        }
-
-        .rainbow-text {
-            animation: rainbowText 4s linear infinite;
-            font-weight: bold;
-        }
-    `
 };
+
