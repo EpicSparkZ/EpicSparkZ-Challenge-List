@@ -27,10 +27,10 @@ export default {
                 <div class="board-container">
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
-                            <td class="rank">
+                            <td class="rank" :id="'rank-' + i">
                                 <p class="type-label-lg">#{{ i + 1 }}</p>
                             </td>
-                            <td class="total">
+                            <td class="total" :id="'total-' + i">
                                 <p class="type-label-lg">{{ localize(ientry.total) }}</p>
                             </td>
                             <td class="user" :class="{ 'active': selected == i }">
@@ -104,7 +104,7 @@ export default {
         // Hide loading spinner
         this.loading = false;
         
-        // Apply rainbow effect to the first place username after data has been loaded
+        // Apply rainbow effect to the first place user's rank, name, and score after data has been loaded
         this.applyRainbowEffect();
     },
     methods: {
@@ -112,9 +112,14 @@ export default {
         applyRainbowEffect() {
             // Wait until the DOM has fully rendered to apply the effect
             this.$nextTick(() => {
+                const firstPlaceRank = document.querySelector('#rank-0');
                 const firstPlaceUsername = document.querySelector('#user-0');
-                if (firstPlaceUsername) {
+                const firstPlaceTotal = document.querySelector('#total-0');
+                
+                if (firstPlaceRank && firstPlaceUsername && firstPlaceTotal) {
+                    this.addRainbowGlow(firstPlaceRank);
                     this.addRainbowGlow(firstPlaceUsername);
+                    this.addRainbowGlow(firstPlaceTotal);
                 }
             });
         },
