@@ -23,12 +23,19 @@ export default {
         <main v-else class="page-list">
             <div class="list-container">
                 <table class="list" v-if="list">
-                    <tr v-for="([level, err], i) in list" :key="i">
+                    <tr
+                        v-for="([level, err], i) in list"
+                        :key="i"
+                    >
                         <td class="rank">
-                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg" :style="{ color: tributeColor }">Tribute</p>
-                            <p v-else-if="i === 0" class="type-label-lg" :style="rankStyle(0)">#1</p>
-                            <p v-else-if="i === 1" class="type-label-lg" :style="rankStyle(1)">#2</p>
-                            <p v-else-if="i === 2" class="type-label-lg" :style="rankStyle(2)">#3</p>
+                            <p
+                                v-if="level?.name === 'HAUNTED'"
+                                class="type-label-lg"
+                                :style="{ color: tributeColor }"
+                            >Tribute</p>
+                            <p v-else-if="i === 0" class="type-label-lg" style="color: gold;">#1</p>
+                            <p v-else-if="i === 1" class="type-label-lg" style="color: silver;">#2</p>
+                            <p v-else-if="i === 2" class="type-label-lg" style="color: #cd7f32;">#3</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
@@ -43,7 +50,10 @@ export default {
             </div>
             <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
                 <div class="level" v-if="level">
-                    <h1 :class="{ 'rainbow-title': level.name === 'HAUNTED' }" :style="level.name === 'HAUNTED' ? { color: 'white', textShadow: rainbowGlow } : {}">
+                    <h1
+                        :class="{ 'rainbow-title': level.name === 'HAUNTED' }"
+                        :style="level.name === 'HAUNTED' ? { color: tributeColor, textShadow: tributeGlow } : {}"
+                    >
                         {{ level.name }}
                     </h1>
                     <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
@@ -126,7 +136,8 @@ export default {
         errors: [],
         roleIconMap,
         store,
-        rainbowGlow: '0 0 15px rgba(255, 0, 0, 0.85), 0 0 25px rgba(255, 140, 0, 0.85), 0 0 35px rgba(255, 255, 0, 0.85), 0 0 45px rgba(0, 255, 0, 0.85), 0 0 55px rgba(0, 0, 255, 0.85), 0 0 65px rgba(75, 0, 130, 0.85), 0 0 75px rgba(238, 130, 238, 0.85)', // Static Rainbow glow for HAUNTED
+        tributeColor: '#ff0000',
+        tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)',
     }),
     computed: {
         level() {
@@ -157,18 +168,30 @@ export default {
         }
 
         this.loading = false;
+
+        this.startBreathingEffect();
     },
     methods: {
         embed,
         score,
         rankStyle(rank) {
-            const colors = ['#FFD700', '#C0C0C0', '#CD7F32']; // Gold, Silver, Bronze colors
+            const colors = ['gold', 'silver', '#cd7f32'];
             let color = colors[rank];
             return {
                 color: color,
-                textShadow: `0 0 5px ${color}, 0 0 10px ${color}, 0 0 15px ${color}`,
-                animation: `breathing 2s ease-in-out infinite`
+                textShadow: `0 0 15px ${color}`,
+                animation: 'breathingGlow 3s infinite alternate'
             };
         },
-    }
+        startBreathingEffect() {
+            const topRanks = [0, 1, 2];
+
+            topRanks.forEach(rank => {
+                const rankElement = document.querySelectorAll('.rank')[rank];
+                if (rankElement) {
+                    rankElement.style.animation = 'breathingGlow 3s infinite alternate';
+                }
+            });
+        }
+    },
 };
