@@ -26,7 +26,7 @@ export default {
                     <tr
                         v-for="([level, err], i) in list"
                         :key="i"
-                        ref="levelRows"
+                        :ref="el => levelRows[i] = el"
                         :style="rowStyles[i]"
                     >
                         <td class="rank">
@@ -35,9 +35,9 @@ export default {
                                 class="type-label-lg"
                                 :style="{ color: tributeColor }"
                             >Tribute</p>
-                            <p v-else-if="i === 0" class="type-label-lg" style="color: gold">#1</p>
-                            <p v-else-if="i === 1" class="type-label-lg" style="color: silver">#2</p>
-                            <p v-else-if="i === 2" class="type-label-lg" :style="{ color: bronzeColor }">#3</p>
+                            <p v-else-if="i === 0" class="type-label-lg" style="color: gold;">#1</p>
+                            <p v-else-if="i === 1" class="type-label-lg" style="color: silver;">#2</p>
+                            <p v-else-if="i === 2" class="type-label-lg" style="color: #cd7f32;">#3</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
@@ -140,8 +140,8 @@ export default {
         store,
         tributeColor: '#ff0000',
         tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)',
-        bronzeColor: '#cd7f32',
         rowStyles: [],
+        levelRows: [],
     }),
     computed: {
         level() {
@@ -159,9 +159,7 @@ export default {
         this.editors = await fetchEditors();
 
         if (!this.list) {
-            this.errors = [
-                "Failed to load list. Retry in a few minutes or notify list staff.",
-            ];
+            this.errors = ["Failed to load list. Retry in a few minutes or notify list staff."];
         } else {
             this.errors.push(
                 ...this.list
@@ -173,15 +171,17 @@ export default {
             }
         }
 
-        // Set default row styles for animation
-        this.rowStyles = Array(this.list.length).fill().map(() => ({
+        // Set initial invisible styles
+        this.rowStyles = this.list.map(() => ({
             opacity: 0,
             transform: 'translateX(-20px)',
             transition: 'all 0.5s ease-out'
         }));
 
+        this.loading = false;
+
         this.$nextTick(() => {
-            this.$refs.levelRows.forEach((row, i) => {
+            this.levelRows.forEach((_, i) => {
                 setTimeout(() => {
                     this.$set(this.rowStyles, i, {
                         opacity: 1,
@@ -193,7 +193,6 @@ export default {
         });
 
         this.startRainbowEffect();
-        this.loading = false;
     },
     methods: {
         embed,
