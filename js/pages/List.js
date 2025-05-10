@@ -28,7 +28,7 @@ export default {
                             <p
                                 v-if="level?.name === 'HAUNTED'"
                                 class="type-label-lg"
-                                :style="{ color: tributeColor }"
+                                :style="{ color: tributeColor, textShadow: glowEffect }"
                             >Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
@@ -46,7 +46,7 @@ export default {
                 <div class="level" v-if="level">
                     <h1
                         :class="{ 'rainbow-title': level.name === 'HAUNTED' }"
-                        :style="level.name === 'HAUNTED' ? { color: tributeColor } : {}"
+                        :style="level.name === 'HAUNTED' ? { color: tributeColor, textShadow: glowEffect } : {}"
                     >
                         {{ level.name }}
                     </h1>
@@ -131,6 +131,7 @@ export default {
         roleIconMap,
         store,
         tributeColor: '#ff0000', // Default initial color
+        glowEffect: '0 0 10px #ff0000', // Default glow effect
     }),
     computed: {
         level() {
@@ -172,11 +173,15 @@ export default {
         score,
         startRainbowEffect() {
             let hue = 0;
-            const interval = 50; // update every 50ms
-            const speed = 2; // slower transition speed
+            const interval = 850; // update every 850ms
+            const speed = 5; // moderate transition speed
             setInterval(() => {
+                // Set the tribute color based on HSL
                 this.tributeColor = `hsl(${hue}, 100%, 65%)`;
-                hue = (hue + speed) % 360; // smoother, slower shift
+                
+                // Set glow effect dynamically
+                this.glowEffect = `0 0 20px hsl(${hue}, 100%, 65%)`; // glow effect
+                hue = (hue + speed) % 360; // slower shift to get a smoother transition
             }, interval);
         }
     },
