@@ -28,7 +28,7 @@ export default {
                             <p
                                 v-if="level?.name === 'HAUNTED'"
                                 class="type-label-lg"
-                                :style="{ color: tributeColor, textShadow: tributeGlow }"
+                                :style="{ color: tributeColor }"
                             >Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
@@ -130,8 +130,8 @@ export default {
         errors: [],
         roleIconMap,
         store,
-        tributeColor: '#ff0000', // Default initial color
-        tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)', // Default glow with opacity 0.85
+        tributeColor: '#ff0000',
+        tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)',
     }),
     computed: {
         level() {
@@ -163,7 +163,6 @@ export default {
             }
         }
 
-        // Start tribute rainbow effect
         this.startRainbowEffect();
 
         this.loading = false;
@@ -173,16 +172,23 @@ export default {
         score,
         startRainbowEffect() {
             let hue = 0;
-            const interval = 85; // Update every 85ms for a quicker transition
-            const speed = 5; // Faster speed (increase this number for a quicker transition)
-            
-            setInterval(() => {
-                // Set the tribute color based on HSL
-                this.tributeColor = `hsl(${hue}, 100%, 65%)`;
+            const interval = 85;
+            const speed = 5;
 
-                // Set the glow effect dynamically with opacity (alpha = 0.85)
-                this.tributeGlow = `0 0 15px rgba(${Math.floor(hue * 255 / 360)}, 0, 0, 0.85)`; // glow effect with opacity 0.85
-                hue = (hue + speed) % 360; // Adjust hue change speed
+            const hslToRgb = (h, s, l) => {
+                s /= 100;
+                l /= 100;
+                const k = n => (n + h / 30) % 12;
+                const a = s * Math.min(l, 1 - l);
+                const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+                return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
+            };
+
+            setInterval(() => {
+                this.tributeColor = `hsl(${hue}, 100%, 65%)`;
+                const [r, g, b] = hslToRgb(hue, 100, 65);
+                this.tributeGlow = `0 0 15px rgba(${r}, ${g}, ${b}, 0.85)`;
+                hue = (hue + speed) % 360;
             }, interval);
         }
     },
