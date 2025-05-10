@@ -160,3 +160,18 @@ export default {
     },
 };
 
+/* Rainbow effect for Tribute title */
+@keyframes rainbowText {
+    0% { color: red; }
+    16% { color: orange; }
+    32% { color: yellow; }
+    48% { color: green; }
+    64% { color: blue; }
+    80% { color: indigo; }
+    100% { color: violet; }
+}
+
+.rainbow-text {
+    animation: rainbowText 4s linear infinite;
+    font-weight: bold;
+}
