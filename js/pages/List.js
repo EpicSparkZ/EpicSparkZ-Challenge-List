@@ -25,7 +25,7 @@ export default {
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
-                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg rip-label">RIP</p>
+                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg rip-label">Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
