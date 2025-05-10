@@ -25,11 +25,22 @@ export default {
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
+                            <!-- Special labels for the top 3 levels -->
                             <p
-                                v-if="level?.name === 'HAUNTED'"
+                                v-if="i === 0"
                                 class="type-label-lg"
-                                :style="{ color: tributeColor }"
-                            >Tribute</p>
+                                style="color: gold;"
+                            >#1</p>
+                            <p
+                                v-else-if="i === 1"
+                                class="type-label-lg"
+                                style="color: silver;"
+                            >#2</p>
+                            <p
+                                v-else-if="i === 2"
+                                class="type-label-lg"
+                                style="color: bronze;"
+                            >#3</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
