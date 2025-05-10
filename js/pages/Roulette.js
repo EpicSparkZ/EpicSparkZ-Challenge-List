@@ -102,7 +102,7 @@ export default {
     data: () => ({
         loading: false,
         levels: [],
-        progression: [], // list of percentages completed
+        progression: [],
         percentage: undefined,
         givenUp: false,
         showRemaining: false,
@@ -112,20 +112,14 @@ export default {
         fileInput: undefined,
     }),
     mounted() {
-        // Create File Input
         this.fileInput = document.createElement('input');
         this.fileInput.type = 'file';
         this.fileInput.multiple = false;
         this.fileInput.accept = '.json';
         this.fileInput.addEventListener('change', this.onImportUpload);
 
-        // Load progress from local storage
         const roulette = JSON.parse(localStorage.getItem('roulette'));
-
-        if (!roulette) {
-            return;
-        }
-
+        if (!roulette) return;
         this.levels = roulette.levels;
         this.progression = roulette.progression;
     },
@@ -168,14 +162,11 @@ export default {
             }
 
             this.loading = true;
-
             const fullList = await fetchList();
 
             if (fullList.filter(([_, err]) => err).length > 0) {
                 this.loading = false;
-                this.showToast(
-                    'List is currently broken. Wait until it\'s fixed to start a roulette.',
-                );
+                this.showToast('List is currently broken. Wait until it\'s fixed to start a roulette.');
                 return;
             }
 
@@ -185,82 +176,58 @@ export default {
                 name: lvl.name,
                 video: lvl.verification,
             }));
+
             const list = [];
             if (this.useMainList) list.push(...fullListMapped.slice(0, 75));
-            if (this.useExtendedList) {
-                list.push(...fullListMapped.slice(75, 150));
-            }
+            if (this.useExtendedList) list.push(...fullListMapped.slice(75, 150));
 
-            // random 100 levels
-            this.levels = shuffle(list).slice(0, 100);
+            const filteredList = list.filter(lvl => lvl.name.toLowerCase() !== 'haunted');
+            this.levels = shuffle(filteredList).slice(0, 100);
             this.showRemaining = false;
             this.givenUp = false;
             this.progression = [];
             this.percentage = undefined;
-
             this.loading = false;
         },
         save() {
-            localStorage.setItem(
-                'roulette',
-                JSON.stringify({
-                    levels: this.levels,
-                    progression: this.progression,
-                }),
-            );
+            localStorage.setItem('roulette', JSON.stringify({
+                levels: this.levels,
+                progression: this.progression,
+            }));
         },
         onDone() {
-            if (!this.percentage) {
-                return;
-            }
-
-            if (
-                this.percentage <= this.currentPercentage ||
-                this.percentage > 100
-            ) {
+            if (!this.percentage) return;
+            if (this.percentage <= this.currentPercentage || this.percentage > 100) {
                 this.showToast('Invalid percentage.');
                 return;
             }
-
             this.progression.push(this.percentage);
             this.percentage = undefined;
-
             this.save();
         },
         onGiveUp() {
             this.givenUp = true;
-
-            // Save progress
             localStorage.removeItem('roulette');
         },
         onImport() {
-            if (
-                this.isActive &&
-                !window.confirm('This will overwrite the currently running roulette. Continue?')
-            ) {
+            if (this.isActive && !window.confirm('This will overwrite the currently running roulette. Continue?')) {
                 return;
             }
-
             this.fileInput.showPicker();
         },
         async onImportUpload() {
             if (this.fileInput.files.length === 0) return;
-
             const file = this.fileInput.files[0];
-
             if (file.type !== 'application/json') {
                 this.showToast('Invalid file.');
                 return;
             }
-
             try {
                 const roulette = JSON.parse(await file.text());
-
                 if (!roulette.levels || !roulette.progression) {
                     this.showToast('Invalid file.');
                     return;
                 }
-
                 this.levels = roulette.levels;
                 this.progression = roulette.progression;
                 this.save();
@@ -273,13 +240,12 @@ export default {
             }
         },
         onExport() {
-            const file = new Blob(
-                [JSON.stringify({
+            const file = new Blob([
+                JSON.stringify({
                     levels: this.levels,
                     progression: this.progression,
-                })],
-                { type: 'application/json' },
-            );
+                })
+            ], { type: 'application/json' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(file);
             a.download = 'tsl_roulette';
