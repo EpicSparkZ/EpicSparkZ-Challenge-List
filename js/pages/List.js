@@ -28,7 +28,7 @@ export default {
                             <p
                                 v-if="level?.name === 'HAUNTED'"
                                 class="type-label-lg"
-                                :style="{ color: tributeColor }"
+                                :style="{}"
                             >Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
@@ -36,7 +36,7 @@ export default {
                         </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span class="type-label-lg">{{ level?.name || \`Error (\${err}.json)\` }}</span>
+                                <span class="type-label-lg">{{ level?.name || `Error (${err}.json)` }}</span>
                             </button>
                         </td>
                     </tr>
@@ -45,11 +45,14 @@ export default {
             <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
                 <div class="level" v-if="level">
                     <h1
-                        :class="{ 'rainbow-title': level.name === 'HAUNTED' }"
-                        :style="level.name === 'HAUNTED' ? { color: tributeColor, textShadow: tributeGlow } : {}"
+                        v-if="level.name === 'HAUNTED'"
+                        ref="rainbowTitle"
+                        class="rainbow-title"
                     >
-                        {{ level.name }}
+                        <span v-html="tributeTitle"></span>
                     </h1>
+                    <h1 v-else>{{ level.name }}</h1>
+
                     <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
                     <iframe class="video" id="videoframe" :src="video" frameborder="0"></iframe>
                     <ul class="stats">
@@ -69,7 +72,7 @@ export default {
                     <h2>Records</h2>
                     <p v-if="selected + 1 <= 75"><strong>{{ level.percentToQualify }}%</strong> or better to qualify</p>
                     <p v-else-if="selected +1 <= 150"><strong>100%</strong> or better to qualify</p>
-                    <p v-else>This level does not accept new records.</p>
+                    <p> else>This level does not accept new records.</p>
                     <table class="records">
                         <tr v-for="record in level.records" class="record">
                             <td class="percent">
@@ -79,7 +82,7 @@ export default {
                                 <a :href="record.link" target="_blank" class="type-label-lg">{{ record.user }}</a>
                             </td>
                             <td class="mobile">
-                                <img v-if="record.mobile" :src="\`/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\`" alt="Mobile">
+                                <img v-if="record.mobile" :src="`/assets/phone-landscape${store.dark ? '-dark' : ''}.svg`" alt="Mobile">
                             </td>
                             <td class="hz">
                                 <p>{{ record.hz }}Hz</p>
@@ -103,7 +106,7 @@ export default {
                         <h3>List Editors</h3>
                         <ol class="editors">
                             <li v-for="editor in editors">
-                                <img :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`" :alt="editor.role">
+                                <img :src="`/assets/${roleIconMap[editor.role]}${store.dark ? '-dark' : ''}.svg`" :alt="editor.role">
                                 <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
                                 <p v-else>{{ editor.name }}</p>
                             </li>
@@ -130,8 +133,8 @@ export default {
         errors: [],
         roleIconMap,
         store,
-        tributeColor: '#ff0000',
-        tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)',
+        tributeTitle: '',
+        hues: [],
     }),
     computed: {
         level() {
@@ -163,33 +166,29 @@ export default {
             }
         }
 
+        this.setupRainbowSpans();
         this.startRainbowEffect();
-
         this.loading = false;
     },
     methods: {
         embed,
         score,
+        setupRainbowSpans() {
+            const text = "HAUNTED";
+            this.hues = Array.from({ length: text.length }, (_, i) => (i * 360 / text.length) % 360);
+            this.tributeTitle = text.split('').map((char, i) => `<span id="char-${i}">${char}</span>`).join('');
+        },
         startRainbowEffect() {
-            let hue = 0;
-            const interval = 85;
-            const speed = 5;
-
-            const hslToRgb = (h, s, l) => {
-                s /= 100;
-                l /= 100;
-                const k = n => (n + h / 30) % 12;
-                const a = s * Math.min(l, 1 - l);
-                const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-                return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
-            };
-
             setInterval(() => {
-                this.tributeColor = `hsl(${hue}, 100%, 65%)`;
-                const [r, g, b] = hslToRgb(hue, 100, 65);
-                this.tributeGlow = `0 0 15px rgba(${r}, ${g}, ${b}, 0.85)`;
-                hue = (hue + speed) % 360;
-            }, interval);
-        }
+                this.hues = this.hues.map(h => (h + 5) % 360);
+                this.hues.forEach((hue, i) => {
+                    const span = document.getElementById(`char-${i}`);
+                    if (span) {
+                        span.style.color = `hsl(${hue}, 100%, 65%)`;
+                        span.style.textShadow = `0 0 8px hsla(${hue}, 100%, 65%, 0.90)`;
+                    }
+                });
+            }, 85);
+        },
     },
 };
