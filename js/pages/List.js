@@ -30,9 +30,6 @@ export default {
                                 class="type-label-lg"
                                 :style="{ color: tributeColor }"
                             >Tribute</p>
-                            <p v-else-if="i + 1 === 1" class="type-label-lg" style="color: gold;">Top 1</p>
-                            <p v-else-if="i + 1 === 2" class="type-label-lg" style="color: silver;">Top 2</p>
-                            <p v-else-if="i + 1 === 3" class="type-label-lg" style="color: #cd7f32;">Top 3</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
