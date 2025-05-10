@@ -164,13 +164,11 @@ export default {
         embed,
         score,
         rankStyle(rank) {
-            const colors = ['gold', 'silver', '#cd7f32'];
-            const glowColors = ['#FFD700', '#C0C0C0', '#CD7F32'];  // Gold, Silver, Bronze colors
+            const colors = ['#FFD700', '#C0C0C0', '#CD7F32']; // Gold, Silver, Bronze colors
             let color = colors[rank];
-            let glowColor = glowColors[rank];
             return {
                 color: color,
-                textShadow: `0 0 5px ${glowColor}, 0 0 10px ${glowColor}, 0 0 15px ${glowColor}`,
+                textShadow: `0 0 5px ${color}, 0 0 10px ${color}, 0 0 15px ${color}`,
                 animation: `breathing 2s ease-in-out infinite`
             };
         },
