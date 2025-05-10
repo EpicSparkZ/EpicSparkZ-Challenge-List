@@ -35,7 +35,7 @@ export default {
                             </td>
                             <td class="user" :class="{ 'active': selected == i }">
                                 <button @click="selected = i">
-                                    <span class="type-label-lg">{{ ientry.user }}</span>
+                                    <span class="type-label-lg" :id="'user-' + i">{{ ientry.user }}</span>
                                 </button>
                             </td>
                         </tr>
@@ -103,34 +103,27 @@ export default {
         this.err = err;
         // Hide loading spinner
         this.loading = false;
-
-        this.$nextTick(() => {
-            const firstRow = this.$el.querySelector('.board tr');
-            if (firstRow) {
-                const glowStyle = `
-                    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-                    background-size: 400% 400%;
-                    animation: rainbowGlow 4s ease infinite;
-                    color: white;
-                    text-shadow: 0 0 10px rgba(255,255,255,0.8);
-                `;
-                firstRow.style.cssText += glowStyle;
-
-                const keyframes = `
-                    @keyframes rainbowGlow {
-                        0% { background-position: 0% 50%; }
-                        50% { background-position: 100% 50%; }
-                        100% { background-position: 0% 50%; }
-                    }
-                `;
-                const styleSheet = document.createElement("style");
-                styleSheet.type = "text/css";
-                styleSheet.innerText = keyframes;
-                document.head.appendChild(styleSheet);
-            }
-        });
+        
+        // Apply rainbow effect to the first place username after data has been loaded
+        this.applyRainbowEffect();
     },
     methods: {
         localize,
+        applyRainbowEffect() {
+            const firstPlaceUsername = document.querySelector('#user-0');
+            if (firstPlaceUsername) {
+                this.addRainbowGlow(firstPlaceUsername);
+            }
+        },
+        addRainbowGlow(element) {
+            let colorIndex = 0;
+            const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+            
+            setInterval(() => {
+                // Set the text color to the current color in the array
+                element.style.color = colors[colorIndex];
+                colorIndex = (colorIndex + 1) % colors.length;  // Cycle through the colors
+            }, 500);  // Change color every 500ms
+        }
     },
 };
