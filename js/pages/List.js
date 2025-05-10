@@ -24,30 +24,11 @@ export default {
             <div class="list-container">
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
-<!-- Change the number in (<= 28") sections to change the start of that section -->
-<td class="rank">
-    <p
-        v-if="i + 1 <= 25"
-        class="type-label-lg"
-        style="color: black;"
-    >
-        #{{ i + 1 }}
-    </p>
-    <p
-        v-else-if="i + 1 <= 28"
-        class="type-label-lg"
-        style="color: red;"
-    >
-        Legacy
-    </p>
-    <p
-        v-else
-        class="type-label-lg"
-        style="color: yellow;"
-    >
-        Super legacy
-    </p>
-</td>
+                        <td class="rank">
+                            <p v-if="i + 1 <= 28" class="type-label-lg">#{{ i + 1 }}</p>
+                            <p v-else-if="i + 1 <= 75" class="type-label-lg">Legacy</p>
+                            <p v-else class="type-label-lg">Testing</p>
+                            </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
                                 <span class="type-label-lg">{{ level?.name || \`Error (\${err}.json)\` }}</span>
