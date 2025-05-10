@@ -187,7 +187,7 @@ export default {
             setInterval(() => {
                 this.tributeColor = `hsl(${hue}, 100%, 65%)`;
                 const [r, g, b] = hslToRgb(hue, 100, 65);
-                this.tributeGlow = `0 0 15px rgba(${r}, ${g}, ${b}, 0.85)`;
+                this.tributeGlow = `0 0 15px rgba(${r}, ${g}, ${b}, 0.80)`;
                 hue = (hue + speed) % 360;
             }, interval);
         }
