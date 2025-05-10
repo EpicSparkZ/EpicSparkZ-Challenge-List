@@ -27,14 +27,14 @@ export default {
 <!-- Change the number in (<= 28") sections to change the start of that section -->
 <td class="rank">
     <p
-        v-if="i + 1 <= 28"
+        v-if="i + 1 <= 25"
         class="type-label-lg"
         style="color: black;"
     >
         #{{ i + 1 }}
     </p>
     <p
-        v-else-if="i + 1 <= 75"
+        v-else-if="i + 1 <= 28"
         class="type-label-lg"
         style="color: red;"
     >
@@ -45,7 +45,7 @@ export default {
         class="type-label-lg"
         style="color: yellow;"
     >
-        Testing
+        Super legacy
     </p>
 </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
