@@ -26,7 +26,7 @@ export default {
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
                             <p
-                                v-if="level?.name === 'HAUNTED'"
+                                v-if="i < 3"
                                 class="type-label-lg"
                                 :style="{ color: tributeColor }"
                             >Tribute</p>
@@ -36,17 +36,17 @@ export default {
                         </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span class="type-label-lg">{{ level?.name || \`Error (\${err}.json)\` }}</span>
+                                <span class="type-label-lg">{{ level?.name || `Error (${err}.json)` }}</span>
                             </button>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
+            <div class="level-container" :class="{ 'rainbow-background': selected < 3 }">
                 <div class="level" v-if="level">
                     <h1
-                        :class="{ 'rainbow-title': level.name === 'HAUNTED' }"
-                        :style="level.name === 'HAUNTED' ? { color: tributeColor, textShadow: tributeGlow } : {}"
+                        :class="{ 'rainbow-title': selected < 3 }"
+                        :style="selected < 3 ? { color: tributeColor, textShadow: tributeGlow } : {}"
                     >
                         {{ level.name }}
                     </h1>
@@ -79,7 +79,7 @@ export default {
                                 <a :href="record.link" target="_blank" class="type-label-lg">{{ record.user }}</a>
                             </td>
                             <td class="mobile">
-                                <img v-if="record.mobile" :src="\`/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\`" alt="Mobile">
+                                <img v-if="record.mobile" :src="`/assets/phone-landscape${store.dark ? '-dark' : ''}.svg`" alt="Mobile">
                             </td>
                             <td class="hz">
                                 <p>{{ record.hz }}Hz</p>
@@ -103,7 +103,7 @@ export default {
                         <h3>List Editors</h3>
                         <ol class="editors">
                             <li v-for="editor in editors">
-                                <img :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`" :alt="editor.role">
+                                <img :src="`/assets/${roleIconMap[editor.role]}${store.dark ? '-dark' : ''}.svg`" :alt="editor.role">
                                 <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
                                 <p v-else>{{ editor.name }}</p>
                             </li>
