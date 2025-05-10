@@ -43,7 +43,7 @@ export default {
             </div>
             <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
                 <div class="level" v-if="level">
-                    <h1 :class="{ 'rainbow-title': level.name === 'HAUNTED' }" :style="level.name === 'HAUNTED' ? { color: tributeColor, textShadow: tributeGlow } : {}">
+                    <h1 :class="{ 'rainbow-title': level.name === 'HAUNTED' }" :style="level.name === 'HAUNTED' ? { color: 'white', textShadow: rainbowGlow } : {}">
                         {{ level.name }}
                     </h1>
                     <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
@@ -126,8 +126,7 @@ export default {
         errors: [],
         roleIconMap,
         store,
-        tributeColor: '#ff0000',
-        tributeGlow: '0 0 15px rgba(255, 0, 0, 0.85)',
+        rainbowGlow: '0 0 15px rgba(255, 0, 0, 0.85), 0 0 25px rgba(255, 140, 0, 0.85), 0 0 35px rgba(255, 255, 0, 0.85), 0 0 45px rgba(0, 255, 0, 0.85), 0 0 55px rgba(0, 0, 255, 0.85), 0 0 65px rgba(75, 0, 130, 0.85), 0 0 75px rgba(238, 130, 238, 0.85)', // Static Rainbow glow for HAUNTED
     }),
     computed: {
         level() {
@@ -158,7 +157,6 @@ export default {
         }
 
         this.loading = false;
-        this.startBreathingEffect();
     },
     methods: {
         embed,
@@ -172,22 +170,5 @@ export default {
                 animation: `breathing 2s ease-in-out infinite`
             };
         },
-        startBreathingEffect() {
-            const styles = document.createElement('style');
-            styles.innerHTML = `
-                @keyframes breathing {
-                    0% {
-                        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 15px rgba(255, 215, 0, 0.5);
-                    }
-                    50% {
-                        text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 1);
-                    }
-                    100% {
-                        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 15px rgba(255, 215, 0, 0.5);
-                    }
-                }
-            `;
-            document.head.appendChild(styles);
-        }
     }
 };
