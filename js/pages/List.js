@@ -159,7 +159,7 @@ export default {
         score,
     },
     style: `
-        /* Rainbow effect for text, title, and background */
+        /* Rainbow effect for Tribute title */
         @keyframes rainbowText {
             0% { color: red; }
             16% { color: orange; }
@@ -170,27 +170,9 @@ export default {
             100% { color: violet; }
         }
 
-        @keyframes rainbowBg {
-            0% { background-color: #ff0000; }
-            16% { background-color: #ff7f00; }
-            32% { background-color: #ffff00; }
-            48% { background-color: #00ff00; }
-            64% { background-color: #0000ff; }
-            80% { background-color: #4b0082; }
-            100% { background-color: #8f00ff; }
-        }
-
         .rainbow-text {
             animation: rainbowText 4s linear infinite;
             font-weight: bold;
-        }
-
-        .rainbow-title {
-            animation: rainbowText 3s linear infinite;
-        }
-
-        .rainbow-background {
-            animation: rainbowBg 10s linear infinite;
         }
     `
 };
