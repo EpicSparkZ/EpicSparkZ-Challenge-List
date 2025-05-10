@@ -25,7 +25,11 @@ export default {
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
-                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg" ref="tributeTitle" :style="{ color: tributeColor, transition: 'color 2s ease' }">Tribute</p>
+                            <p
+                                v-if="level?.name === 'HAUNTED'"
+                                class="type-label-lg"
+                                :style="{ color: tributeColor, transition: 'color 0.8s linear' }"
+                            >Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
@@ -38,9 +42,9 @@ export default {
                     </tr>
                 </table>
             </div>
-            <div class="level-container" :class="{ 'rip-background': level?.name === 'HAUNTED' }">
+            <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
                 <div class="level" v-if="level">
-                    <h1 :class="{ 'rip-title': level.name === 'HAUNTED' }">{{ level.name }}</h1>
+                    <h1 :class="{ 'rainbow-title': level.name === 'HAUNTED' }">{{ level.name }}</h1>
                     <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
                     <iframe class="video" id="videoframe" :src="video" frameborder="0"></iframe>
                     <ul class="stats">
@@ -121,7 +125,7 @@ export default {
         errors: [],
         roleIconMap,
         store,
-        tributeColor: "red", // Initial color
+        tributeColor: "#ff0000", // initial color for Tribute
     }),
     computed: {
         level() {
@@ -155,22 +159,19 @@ export default {
 
         this.loading = false;
 
-        // Start the rainbow effect
+        // 🎨 Start Tribute color animation
         this.startRainbowEffect();
     },
     methods: {
         embed,
         score,
-
-        // JavaScript method for Rainbow effect
         startRainbowEffect() {
-            const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet", "pink", "turquoise", "magenta"];
-            let i = 0;
-            
+            let hue = 0;
+            const interval = 800 / 24; // smooth 800ms cycle
             setInterval(() => {
-                this.tributeColor = colors[i];  // Update the tributeColor data property
-                i = (i + 1) % colors.length;  // Cycle through colors
-            }, 800); // Update every 800ms for slower transitions
+                this.tributeColor = `hsl(${hue}, 100%, 50%)`;
+                hue = (hue + 15) % 360;
+            }, interval);
         }
-    }
+    },
 };
