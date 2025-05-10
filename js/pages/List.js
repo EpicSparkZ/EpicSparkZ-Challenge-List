@@ -30,21 +30,16 @@ export default {
                                 class="type-label-lg"
                                 :style="{ color: tributeColor }"
                             >Tribute</p>
-                            <p v-else-if="i + 1 === 1" class="type-label-lg">#1</p>
-                            <p v-else-if="i + 1 === 2" class="type-label-lg">#2</p>
-                            <p v-else-if="i + 1 === 3" class="type-label-lg">#3</p>
+                            <p v-else-if="i + 1 === 1" class="type-label-lg" style="color: gold;">#1</p>
+                            <p v-else-if="i + 1 === 2" class="type-label-lg" style="color: silver;">#2</p>
+                            <p v-else-if="i + 1 === 3" class="type-label-lg" style="color: #cd7f32;">#3</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
                         </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span
-                                  class="type-label-lg"
-                                  :style="level?.name === 'HAUNTED' ? { color: tributeColor, textShadow: tributeGlow } : {}"
-                                >
-                                  {{ level?.name || `Error (${err}.json)` }}
-                                </span>
+                                <span class="type-label-lg">{{ level?.name || \`Error (\${err}.json)\` }}</span>
                             </button>
                         </td>
                     </tr>
@@ -87,7 +82,7 @@ export default {
                                 <a :href="record.link" target="_blank" class="type-label-lg">{{ record.user }}</a>
                             </td>
                             <td class="mobile">
-                                <img v-if="record.mobile" :src="`/assets/phone-landscape${store.dark ? '-dark' : ''}.svg`" alt="Mobile">
+                                <img v-if="record.mobile" :src="\`/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\`" alt="Mobile">
                             </td>
                             <td class="hz">
                                 <p>{{ record.hz }}Hz</p>
@@ -111,7 +106,7 @@ export default {
                         <h3>List Editors</h3>
                         <ol class="editors">
                             <li v-for="editor in editors">
-                                <img :src="`/assets/${roleIconMap[editor.role]}${store.dark ? '-dark' : ''}.svg`" :alt="editor.role">
+                                <img :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`" :alt="editor.role">
                                 <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
                                 <p v-else>{{ editor.name }}</p>
                             </li>
@@ -190,14 +185,12 @@ export default {
                 const a = s * Math.min(l, 1 - l);
                 const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
                 return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
-            };
-
-            setInterval(() => {
-                this.tributeColor = `hsl(${hue}, 100%, 65%)`;
-                const [r, g, b] = hslToRgb(hue, 100, 65);
-                this.tributeGlow = `0 0 15px rgba(${r}, ${g}, ${b}, 0.80)`;
-                hue = (hue + speed) % 360;
-            }, interval);
-        }
-    },
 };
+        setInterval(() => {
+            this.tributeColor = `hsl(${hue}, 100%, 65%)`;
+            const [r, g, b] = hslToRgb(hue, 100, 65);
+            this.tributeGlow = `0 0 15px rgba(${r}, ${g}, ${b}, 0.80)`;
+            hue = (hue + speed) % 360;
+        }, interval);
+    }
+},
