@@ -38,8 +38,8 @@ export default {
             </div>
             <div class="level-container">
                 <div class="level" v-if="level">
-                    <h1>{{ level.name }}</h1>
-                    <p v-if="level.path === 'HAUNTED'" class="type-label-md">meow</p>
+                   <h1>{{ level.name }}</h1>
+                    <p v-if="level?.path === 'HAUNTED'" class="type-label-md">meow</p>
                     <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
                     <iframe class="video" id="videoframe" :src="video" frameborder="0"></iframe>
                     <ul class="stats">
