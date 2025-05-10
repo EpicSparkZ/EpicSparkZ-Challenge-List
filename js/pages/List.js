@@ -25,7 +25,7 @@ export default {
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
-                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg rainbow-text">Tribute</p>
+                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg" ref="tributeTitle">Tribute</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
@@ -153,25 +153,26 @@ export default {
         }
 
         this.loading = false;
+
+        // Start the rainbow effect
+        this.startRainbowEffect();
     },
     methods: {
         embed,
         score,
-    },
+
+        // JavaScript method for Rainbow effect
+        startRainbowEffect() {
+            const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+            let i = 0;
+            const tributeTitle = this.$refs.tributeTitle; // Access the Tribute title via ref
+
+            if (tributeTitle) {
+                setInterval(() => {
+                    tributeTitle.style.color = colors[i];
+                    i = (i + 1) % colors.length; // Cycle through colors
+                }, 400); // Update every 400ms (feel free to adjust)
+            }
+        }
+    }
 };
-
-/* Rainbow effect for Tribute title */
-@keyframes rainbowText {
-    0% { color: red; }
-    16% { color: orange; }
-    32% { color: yellow; }
-    48% { color: green; }
-    64% { color: blue; }
-    80% { color: indigo; }
-    100% { color: violet; }
-}
-
-.rainbow-text {
-    animation: rainbowText 4s linear infinite;
-    font-weight: bold;
-}
