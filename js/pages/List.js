@@ -23,16 +23,9 @@ export default {
         <main v-else class="page-list">
             <div class="list-container">
                 <table class="list" v-if="list">
-                    <tr
-                        v-for="([level, err], i) in list"
-                        :key="i"
-                    >
+                    <tr v-for="([level, err], i) in list" :key="i">
                         <td class="rank">
-                            <p
-                                v-if="level?.name === 'HAUNTED'"
-                                class="type-label-lg"
-                                :style="{ color: tributeColor }"
-                            >Tribute</p>
+                            <p v-if="level?.name === 'HAUNTED'" class="type-label-lg" :style="{ color: tributeColor }">Tribute</p>
                             <p v-else-if="i === 0" class="type-label-lg" style="color: gold;">#1</p>
                             <p v-else-if="i === 1" class="type-label-lg" style="color: silver;">#2</p>
                             <p v-else-if="i === 2" class="type-label-lg" style="color: #cd7f32;">#3</p>
@@ -50,10 +43,7 @@ export default {
             </div>
             <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
                 <div class="level" v-if="level">
-                    <h1
-                        :class="{ 'rainbow-title': level.name === 'HAUNTED' }"
-                        :style="level.name === 'HAUNTED' ? { color: tributeColor, textShadow: tributeGlow } : {}"
-                    >
+                    <h1 :class="{ 'rainbow-title': level.name === 'HAUNTED' }" :style="level.name === 'HAUNTED' ? { color: tributeColor, textShadow: tributeGlow } : {}">
                         {{ level.name }}
                     </h1>
                     <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
@@ -168,7 +158,6 @@ export default {
         }
 
         this.loading = false;
-
         this.startBreathingEffect();
     },
     methods: {
@@ -192,6 +181,22 @@ export default {
                     rankElement.style.animation = 'breathingGlow 3s infinite alternate';
                 }
             });
+
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes breathingGlow {
+                    0% {
+                        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+                    }
+                    50% {
+                        text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+                    }
+                    100% {
+                        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
         }
     },
 };
