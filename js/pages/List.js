@@ -26,27 +26,35 @@ export default {
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
                             <p
-                                v-if="i < 3"
+                                v-if="level?.name === 'HAUNTED'"
                                 class="type-label-lg"
                                 :style="{ color: tributeColor }"
                             >Tribute</p>
+                            <p v-else-if="i + 1 === 1" class="type-label-lg">#1</p>
+                            <p v-else-if="i + 1 === 2" class="type-label-lg">#2</p>
+                            <p v-else-if="i + 1 === 3" class="type-label-lg">#3</p>
                             <p v-else-if="i + 1 <= 31" class="type-label-lg">#{{ i + 1 }}</p>
                             <p v-else-if="i + 1 <= 51" class="type-label-lg">Legacy</p>
                             <p v-else class="type-label-lg">Super Legacy</p>
                         </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span class="type-label-lg">{{ level?.name || `Error (${err}.json)` }}</span>
+                                <span
+                                  class="type-label-lg"
+                                  :style="level?.name === 'HAUNTED' ? { color: tributeColor, textShadow: tributeGlow } : {}"
+                                >
+                                  {{ level?.name || `Error (${err}.json)` }}
+                                </span>
                             </button>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div class="level-container" :class="{ 'rainbow-background': selected < 3 }">
+            <div class="level-container" :class="{ 'rainbow-background': level?.name === 'HAUNTED' }">
                 <div class="level" v-if="level">
                     <h1
-                        :class="{ 'rainbow-title': selected < 3 }"
-                        :style="selected < 3 ? { color: tributeColor, textShadow: tributeGlow } : {}"
+                        :class="{ 'rainbow-title': level.name === 'HAUNTED' }"
+                        :style="level.name === 'HAUNTED' ? { color: tributeColor, textShadow: tributeGlow } : {}"
                     >
                         {{ level.name }}
                     </h1>
