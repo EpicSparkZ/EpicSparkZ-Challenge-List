@@ -28,7 +28,7 @@ export default {
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
                             <td class="rank">
-                                <p class="type-label-lg">#{{ i + 1 }}</p>
+                                <p class="type-label-lg">{{ i === 0 ? '🏆' : '#' + (i + 1) }}</p>
                             </td>
                             <td class="total">
                                 <p class="type-label-lg">{{ localize(ientry.total) }}</p>
@@ -101,7 +101,6 @@ export default {
         const [leaderboard, err] = await fetchLeaderboard();
         this.leaderboard = leaderboard;
         this.err = err;
-        // Hide loading spinner
         this.loading = false;
     },
     methods: {
