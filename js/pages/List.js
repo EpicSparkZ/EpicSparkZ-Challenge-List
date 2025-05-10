@@ -172,11 +172,11 @@ export default {
         score,
         startRainbowEffect() {
             let hue = 0;
-            const interval = 850; // update every 850ms
-            const speed = 5; // moderate transition speed
+            const interval = 50; // update every 50ms
+            const speed = 2; // slower transition speed
             setInterval(() => {
                 this.tributeColor = `hsl(${hue}, 100%, 65%)`;
-                hue = (hue + speed) % 360; // slower shift to get a smoother transition
+                hue = (hue + speed) % 360; // smoother, slower shift
             }, interval);
         }
     },
