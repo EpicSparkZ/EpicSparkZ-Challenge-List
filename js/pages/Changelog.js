@@ -1,12 +1,11 @@
 export default {
   name: 'Changelog',
   mounted() {
-    // Use Vue's nextTick to ensure the redirect happens after mounting
-    this.$nextTick(() => {
-      window.location.href = 'https://eclchangelog.pages.dev';
-    });
+    // Redirect to the new changelog site
+    window.location.href = 'https://eclchangelog.pages.dev';
   },
   render() {
-    return null; // You can return null or a placeholder
+    // Optional: Return null or a placeholder while redirecting
+    return null;
   }
 };
