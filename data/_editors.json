@@ -6,22 +6,22 @@
     },
     {
         "role": "admin",
-        "name": "Mental",
-        "link": "https://www.youtube.com/@mentalvr5978"
-    },
-    {
-        "role": "helper",
         "name": "Tonk",
         "link": "https://www.youtube.com/@tonkorsmth"
     },
     {
+        "role": "helper",
+        "name": "N/A",
+        "link": ""
+    },
+    {
         "role": "trial",
         "name": "N/A",
-        "link": "Abc"
+        "link": ""
     },
     {
         "role": "dev",
         "name": "N/A",
-        "link": "Abc"
+        "link": ""
     }
 ]
