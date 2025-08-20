@@ -1,8 +1,8 @@
 export default {
-  name: 'Changelog',
+  name: 'Other',
   mounted() {
     // Reload the page to ensure it loads fresh
-    window.location.replace('https://eclchangelog.pages.dev');
+    window.location.replace('https://epicsparkz.pages.dev');
   },
   render() {
     // Return null or a placeholder while redirecting
