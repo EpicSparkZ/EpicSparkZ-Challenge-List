@@ -12,7 +12,13 @@
             "user": "Mental",
             "link": "https://m.youtube.com/watch?v=RWid9ZMA-LU",
             "percent": 100,
-            "hz": 360
+            "hz": 240
+      },
+      {
+            "user": "Lukdagoat12",
+            "link": "https://youtu.be/Ky50P_gSH30",
+            "percent": 100,
+            "hz": 120
       }
     ]
 }
